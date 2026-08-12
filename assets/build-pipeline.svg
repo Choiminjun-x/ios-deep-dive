@@ -1,0 +1,68 @@
+<svg width="680" height="545" viewBox="0 0 680 545" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Xcode 빌드 파이프라인 8단계</title>
+<desc>Run 버튼부터 첫 화면까지의 8단계. 1~6단계는 맥에서, 7~8단계는 기기에서 진행된다.</desc>
+<style>
+text { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+.th { font-size: 14px; font-weight: 500; }
+.ts { font-size: 12px; font-weight: 400; }
+.gray-box { fill: #F1EFE8; stroke: #5F5E5A; stroke-width: 0.5; }
+.gray-t { fill: #2C2C2A; }
+.gray-s { fill: #5F5E5A; }
+.teal-box { fill: #E1F5EE; stroke: #0F6E56; stroke-width: 0.5; }
+.teal-t { fill: #04342C; }
+.teal-s { fill: #0F6E56; }
+.arr { stroke: #888780; stroke-width: 1.5; fill: none; }
+.cap { fill: #888780; }
+</style>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<text class="ts cap" x="60" y="62">회색 = 맥에서 진행 · 청록 = 기기에서 진행</text>
+
+<rect class="gray-box" x="60" y="96" width="240" height="56" rx="8"/>
+<text class="th gray-t" x="180" y="116" text-anchor="middle" dominant-baseline="central">1. 스킴 해석</text>
+<text class="ts gray-s" x="180" y="134" text-anchor="middle" dominant-baseline="central">어떤 설정으로 빌드할지</text>
+<line class="arr" x1="180" y1="156" x2="180" y2="188" marker-end="url(#arrow)"/>
+
+<rect class="gray-box" x="60" y="192" width="240" height="56" rx="8"/>
+<text class="th gray-t" x="180" y="212" text-anchor="middle" dominant-baseline="central">2. 할 일 목록</text>
+<text class="ts gray-s" x="180" y="230" text-anchor="middle" dominant-baseline="central">바뀐 것만 추림</text>
+<line class="arr" x1="180" y1="252" x2="180" y2="284" marker-end="url(#arrow)"/>
+
+<rect class="gray-box" x="60" y="288" width="240" height="56" rx="8"/>
+<text class="th gray-t" x="180" y="308" text-anchor="middle" dominant-baseline="central">3. 컴파일</text>
+<text class="ts gray-s" x="180" y="326" text-anchor="middle" dominant-baseline="central">소스 → .o 파일</text>
+<line class="arr" x1="180" y1="348" x2="180" y2="380" marker-end="url(#arrow)"/>
+
+<rect class="gray-box" x="60" y="384" width="240" height="56" rx="8"/>
+<text class="th gray-t" x="180" y="404" text-anchor="middle" dominant-baseline="central">4. 링크</text>
+<text class="ts gray-s" x="180" y="422" text-anchor="middle" dominant-baseline="central">합쳐서 실행 파일로</text>
+
+<path class="arr" d="M300 412 L340 412 L340 124 L374 124" marker-end="url(#arrow)"/>
+
+<rect class="gray-box" x="380" y="96" width="240" height="56" rx="8"/>
+<text class="th gray-t" x="500" y="116" text-anchor="middle" dominant-baseline="central">5. 번들 조립</text>
+<text class="ts gray-s" x="500" y="134" text-anchor="middle" dominant-baseline="central">리소스 변환·배치</text>
+<line class="arr" x1="500" y1="156" x2="500" y2="188" marker-end="url(#arrow)"/>
+
+<rect class="gray-box" x="380" y="192" width="240" height="56" rx="8"/>
+<text class="th gray-t" x="500" y="212" text-anchor="middle" dominant-baseline="central">6. 코드 서명</text>
+<text class="ts gray-s" x="500" y="230" text-anchor="middle" dominant-baseline="central">해시 계산 + 인증서</text>
+<line class="arr" x1="500" y1="252" x2="500" y2="284" marker-end="url(#arrow)"/>
+
+<rect class="teal-box" x="380" y="288" width="240" height="56" rx="8"/>
+<text class="th teal-t" x="500" y="308" text-anchor="middle" dominant-baseline="central">7. 설치</text>
+<text class="ts teal-s" x="500" y="326" text-anchor="middle" dominant-baseline="central">컨테이너 생성</text>
+<line class="arr" x1="500" y1="348" x2="500" y2="380" marker-end="url(#arrow)"/>
+
+<rect class="teal-box" x="380" y="384" width="240" height="56" rx="8"/>
+<text class="th teal-t" x="500" y="404" text-anchor="middle" dominant-baseline="central">8. 로드 및 실행</text>
+<text class="ts teal-s" x="500" y="422" text-anchor="middle" dominant-baseline="central">dyld → main()</text>
+<line class="arr" x1="500" y1="444" x2="500" y2="472" marker-end="url(#arrow)"/>
+
+<rect class="gray-box" x="440" y="476" width="120" height="36" rx="8"/>
+<text class="th gray-t" x="500" y="494" text-anchor="middle" dominant-baseline="central">첫 화면</text>
+</svg>
