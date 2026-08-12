@@ -8,7 +8,7 @@
 
 # Claude Code — 개인 파일
 CLAUDE.local.md
-.claude/
+.claude/settings.local.json
 
 # macOS
 .DS_Store
