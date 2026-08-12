@@ -1,0 +1,14 @@
+# Obsidian — 로컬 UI 상태만 제외 (설정은 커밋)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.obsidian/plugins/
+.obsidian/themes/
+.trash/
+
+# Claude Code — 개인 파일
+CLAUDE.local.md
+.claude/settings.local.json
+
+# macOS
+.DS_Store
