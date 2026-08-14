@@ -29,12 +29,18 @@ if echo "$CONTENT" | grep -E '\]\(/[^)]+\.md\)' ; then
   fail=1
 fi
 
-# 깨진 상대 링크 검출
-while read -r p; do
+# 깨진 상대 링크 검출 (링크를 담은 파일의 디렉토리 기준으로 해석)
+while IFS=$'\t' read -r fn p; do
   [ -z "$p" ] && continue
-  [ -f "$p" ] || { echo "깨진 링크: $p"; fail=1; }
-done < <(echo "$CONTENT" | grep -oE '\]\(([^):]+\.md)\)' \
-         | sed -E 's/^\]\((.+)\)$/\1/' | sort -u)
+  [ -f "$(dirname "$fn")/$p" ] || { echo "깨진 링크: $fn → $p"; fail=1; }
+done < <(echo "$CONTENT" | awk '{
+    fn = $0; sub(/:.*/, "", fn)
+    s = $0
+    while (match(s, /\]\([^):]+\.md\)/)) {
+      print fn "\t" substr(s, RSTART + 2, RLENGTH - 3)
+      s = substr(s, RSTART + RLENGTH)
+    }
+  }' | sort -u)
 
 [ $fail -eq 0 ] && echo "lint OK"
 exit $fail
