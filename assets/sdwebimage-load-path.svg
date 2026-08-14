@@ -1,0 +1,70 @@
+<svg viewBox="0 0 680 600" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888780"/>
+    </marker>
+  </defs>
+
+  <!-- 범례 -->
+  <rect x="60" y="16" width="12" height="12" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="80" y="26" font-size="12" fill="#0F6E56">메인 스레드</text>
+  <rect x="176" y="16" width="12" height="12" rx="3" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="196" y="26" font-size="12" fill="#5F5E5A">백그라운드</text>
+
+  <!-- 1. sd_setImage -->
+  <rect x="60" y="56" width="300" height="52" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="76" y="80" font-size="14" font-weight="500" fill="#04342C">sd_setImage(with:)</text>
+  <text x="76" y="98" font-size="12" fill="#0F6E56">이전 요청 취소 · placeholder</text>
+
+  <!-- 2. 메모리 캐시 -->
+  <rect x="60" y="144" width="300" height="52" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="76" y="168" font-size="14" font-weight="500" fill="#04342C">메모리 캐시 조회</text>
+  <text x="76" y="186" font-size="12" fill="#0F6E56">UIImage · raw 비트맵 보유</text>
+
+  <!-- 3. 디스크 캐시 -->
+  <rect x="60" y="248" width="300" height="52" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="76" y="272" font-size="14" font-weight="500" fill="#2C2C2A">디스크 캐시 조회 (ioQueue)</text>
+  <text x="76" y="290" font-size="12" fill="#5F5E5A">원본 Data · 직렬 큐</text>
+
+  <!-- 4. 다운로드 -->
+  <rect x="60" y="352" width="300" height="52" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="76" y="376" font-size="14" font-weight="500" fill="#2C2C2A">다운로드 (downloadQueue)</text>
+  <text x="76" y="394" font-size="12" fill="#5F5E5A">기본 동시 6</text>
+
+  <!-- 5. 디코딩 -->
+  <rect x="60" y="440" width="300" height="52" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="76" y="464" font-size="14" font-weight="500" fill="#2C2C2A">디코딩 (coderQueue)</text>
+  <text x="76" y="482" font-size="12" fill="#5F5E5A">Data → 비트맵 · 메모리 확정</text>
+
+  <!-- 6. 최종 세팅 -->
+  <rect x="60" y="528" width="300" height="52" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="76" y="552" font-size="14" font-weight="500" fill="#04342C">image 세팅</text>
+  <text x="76" y="570" font-size="12" fill="#0F6E56">메인 큐로 hop</text>
+
+  <!-- 오른쪽: 메모리 히트 -->
+  <rect x="440" y="144" width="200" height="52" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="456" y="168" font-size="14" font-weight="500" fill="#04342C">즉시 반환</text>
+  <text x="456" y="186" font-size="12" fill="#0F6E56">동기 · 깜빡임 없음</text>
+
+  <!-- 오른쪽: 디스크 히트 -->
+  <rect x="440" y="248" width="200" height="52" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="456" y="272" font-size="14" font-weight="500" fill="#2C2C2A">디코딩 후 반환</text>
+  <text x="456" y="290" font-size="12" fill="#5F5E5A">IO + 전체 디코딩 비용</text>
+
+  <!-- 세로 화살표 -->
+  <line x1="210" y1="108" x2="210" y2="140" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+  <line x1="210" y1="196" x2="210" y2="244" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+  <line x1="210" y1="300" x2="210" y2="348" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+  <line x1="210" y1="404" x2="210" y2="436" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+  <line x1="210" y1="492" x2="210" y2="524" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+
+  <!-- 가로 화살표 (히트) -->
+  <line x1="360" y1="170" x2="436" y2="170" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+  <line x1="360" y1="274" x2="436" y2="274" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+
+  <!-- 분기 라벨 -->
+  <text x="222" y="222" font-size="12" fill="#5F5E5A">미스</text>
+  <text x="222" y="326" font-size="12" fill="#5F5E5A">미스</text>
+  <text x="368" y="162" font-size="12" fill="#5F5E5A">히트</text>
+  <text x="368" y="266" font-size="12" fill="#5F5E5A">히트</text>
+</svg>
