@@ -5,6 +5,14 @@ Xcode에서 Run 버튼을 누르면 앱이 실행되기까지 무슨 일이 일�
 ![Xcode 빌드 파이프라인 8단계](../assets/build-pipeline.svg)
 1~6번은 맥에서, 7~8번은 기기에서 벌어진다. 빌드 로그에 남는 건 6번까지다.
 
+## 결론
+
+- 설정값은 Target > Project > xcconfig > 기본값 순으로 위가 이긴다. Target에 직접 넣은 값이 xcconfig를 가리는 것이 "고쳤는데 반영 안 됨"의 원인 → 1. 스킴과 빌드 설정
+- 컴파일 옵션도 증분 빌드의 입력이다. 설정 하나만 바꿔도 전체 빌드가 도는 게 정상 → 2. 할 일 목록 만들기
+- Run Script의 Input/Output이 비면 매번 실행되고 뒤 작업까지 연쇄로 다시 돈다. 단 검사형 스크립트는 일부러 비워둔다 → 2. 할 일 목록 만들기
+- 임베드한 동적 프레임워크는 메모리 공유 이득 없이 실행 시점 로딩 비용만 남는다. pre-main은 코드로 못 고치고 프레임워크 개수·링크 방식으로만 개입한다 → 4. 링크 · 8. 로드 & 실행
+- Entitlements가 허가에 없으면 설치가 거부돼 바로 알지만, 허가에 있는데 요청하지 않으면 조용히 동작하지 않는다 — 이쪽이 더 위험하다 → 6. 코드 서명
+
 ---
 
 ## 1. 스킴과 빌드 설정
@@ -66,9 +74,7 @@ Xcode 기본값
 
 - 스킴은 설정값이 아니라 **액션별로 어떤 Configuration을 쓸지 정해둔 메모**
 - Run은 기본 Debug, Archive는 기본 Release
-- 설정값 우선순위: **Target > Project > xcconfig > 기본값**. 위에 있으면 아래는 무시
 - 이 구조의 목적은 **공통은 한 곳에, 예외만 개별로**. 타겟이 많을수록 필수
-- Target에 직접 넣은 값이 xcconfig를 가린다 → "xcconfig 고쳤는데 반영 안 됨"의 원인
 
 ---
 
@@ -85,13 +91,7 @@ Xcode 기본값
 증분 빌드   1개만 컴파일            →  10초
 ```
 
-이전 결과를 DerivedData에 남겨두고 재활용한다.
-
-| 용어 | 뜻 |
-|------|-----|
-| 증분 빌드 | 변경분만 다시 빌드 |
-| 클린 빌드 | 전부 다시 (`⇧⌘K` 후 빌드) |
-| DerivedData | 이전 결과가 쌓이는 곳. 지우면 다음은 클린 빌드 |
+이전 결과를 DerivedData에 남겨두고 재활용한다. 이걸 지우거나 `⇧⌘K`로 클린하면 다음 빌드는 전부 다시 돈다.
 
 "DerivedData 지우니까 해결됐다"는 증분 빌드 판단이 꼬였을 때 캐시를 통째로 버리는 대처다. 자주 그래야 한다면 그 자체가 문제 신호다.
 
@@ -171,10 +171,7 @@ Output Files:  $(DERIVED_FILE_DIR)/Generated.swift
 
 - **증분 빌드** = 바뀐 것만 다시 빌드. 반대는 클린 빌드
 - 판단 기준은 입력 → 출력 쌍. 출력이 있고 입력이 그대로면 건너뜀
-- **컴파일 옵션도 입력에 포함** → 설정만 바꿔도 전체 빌드가 돈다
 - Swift는 헤더가 없어 파일 간 의존을 소스에서 알 수 없다 → 컴파일러가 별도 기록. 그래서 C보다 부정확하고 보수적으로 넓게 재컴파일
-- Run Script Phase의 Input/Output이 비면 **매번 실행 + 뒤따르는 작업까지 연쇄 재실행**
-- 단, 검사형 스크립트(SwiftLint)는 비워두는 게 맞다. 채우면 검사를 건너뛴다
 - 빌드 시간은 추측 금지, Build Timeline부터
 
 ---
@@ -256,10 +253,7 @@ let x = items.filter { $0.count > 3 }.map { $0.name }
 
 라이브러리도 여기서 붙는다. 붙는 방식이 둘이다.
 
-| | 정적 (static) | 동적 (dynamic) |
-|---|---|---|
-| 링크 시점 | 코드를 바이너리에 **복사** | 이름만 기록 |
-| 실행 시점 | 이미 안에 있음 | **dyld가 찾아서 로드** |
+정적은 링크 시점에 코드를 바이너리에 복사해 넣고, 동적은 이름만 기록해 뒀다가 실행 시점에 dyld가 찾아서 로드한다.
 
 정적은 지금 다 끝내는 방식, 동적은 실행 시점으로 미루는 방식이다.
 
@@ -312,7 +306,6 @@ ls "$APP/Frameworks"
 - 링커는 소스를 안 본다 → 링크 에러에 줄 번호가 없다
 - **정적** = 빌드 때 복사. 바이너리 커지고 실행 빠름
 - **동적** = 이름만 기록, 실행 때 dyld가 로드. 바이너리 작고 실행 느림
-- 동적의 원래 목적은 메모리 공유. **임베드한 것은 공유되지 않아 이득이 없다**
 - 정적/동적은 라이브러리 성격이 아니라 **배포 형태**로 갈린다
 - 산출물은 `Ggcard.app/Ggcard` (Mach-O 실행 파일)
 
@@ -335,10 +328,7 @@ Ggcard.app/
 └── Frameworks/         ← 동적 프레임워크 24개
 ```
 
-```bash
-open -R "$APP"    # Finder에서 열기
-ls -la "$APP"
-```
+터미널에서 여는 명령은 [레퍼런스](#레퍼런스)에.
 
 ### 리소스는 원본 그대로 들어가지 않는다
 
@@ -348,12 +338,9 @@ ls -la "$APP"
 | `.storyboard` | `.storyboardc` (안에 `.nib`) |
 | `Info.plist` (XML) | 바이너리 plist + 변수 치환 |
 
-```bash
-head -c 100 "$APP/Info.plist"      # bplist00... 깨져 보임
-plutil -p "$APP/Info.plist"        # 정상 출력
-```
+바이너리로 바뀐 `Info.plist`는 `plutil`로 확인할 수 있다([레퍼런스](#레퍼런스)).
 
-전부 **실행 시점을 빠르게 하려는 것**이다. XML 파싱과 파일 탐색은 느리고, 어차피 빌드 때 한 번 하면 되는 일이다. `UIImage(named:)`가 파일 시스템을 뒤지지 않고 `Assets.car`를 조회하는 이유다.
+전부 **실행 시점을 빠르게 하려는 것**이다. XML 파싱과 파일 탐색은 느리고, 어차피 빌드 때 한 번 하면 되는 일이다. `UIImage(named:)`가 파일 시스템을 뒤지지 않고 `Assets.car`를 조회하는 이유다. 런타임에서 `.car`를 어떻게 조회하고 캐싱하는지는 [UIImage와 이미지 메모리](uikit-uiimage-memory.md)에 있다.
 
 ### Asset Catalog에 들어가는 것
 
@@ -368,9 +355,7 @@ UIImage(named: name)
 
 `.xcassets` 밖에 두고 Copy Bundle Resources로 넣은 이미지는 개별 파일 그대로 남는다. 서드파티 SDK 리소스가 대개 이쪽이다.
 
-```bash
-xcrun assetutil --info "$APP/Assets.car" | head -40
-```
+`Assets.car`에 뭐가 들었는지는 `assetutil`로 확인한다([레퍼런스](#레퍼런스)).
 
 > [!NOTE]
 > `Assets.car`에는 다 들어가지만 사용자가 받는 건 다르다. **App Thinning**이 앱스토어에서 기기별로 잘라 배포한다. 로컬 `Assets.car`가 50MB여도 실제 다운로드는 그보다 작을 수 있다.
@@ -420,19 +405,12 @@ Ggcard.app               ← 나중
 
 바깥을 먼저 서명하면 안쪽을 서명하는 순간 파일이 바뀌어 바깥 해시가 깨진다. 빌드 로그에 `CodeSign`이 여러 번 보이는 이유다.
 
-```bash
-codesign -dv "$APP" 2>&1
-codesign -d --entitlements :- "$APP" 2>/dev/null
-ls "$APP/_CodeSignature"
-```
-
-Entitlements는 파일로 남지 않고 서명 안에 박힌다. 그래서 사후 수정이 불가능하고, 읽으려면 위 명령으로 꺼내야 한다.
+Entitlements는 파일로 남지 않고 서명 안에 박힌다. 그래서 사후 수정이 불가능하고, 읽으려면 `codesign`으로 꺼내야 한다([레퍼런스](#레퍼런스)).
 
 ### 정리
 
 - 서명 = 변조 검증 + 신원 증명. iOS에서는 우회 불가
 - 인증서(신분증) / Entitlements(신청서) / Profile(허가증) 셋은 별개
-- **허가에 있는데 요청 안 한 경우가 더 위험** — 조용히 동작 안 함
 - 중첩 번들은 안쪽부터 서명한다
 - Entitlements는 서명에 박혀서 사후 수정 불가
 
@@ -452,10 +430,7 @@ Entitlements는 파일로 남지 않고 서명 안에 박힌다. 그래서 사�
 
 앱은 자기 영역 안에서만 파일을 쓸 수 있다(샌드박스). 설치할 때 iOS가 그 영역을 만든다.
 
-| 컨테이너 | 내용 | 재설치 시 |
-|----------|------|-----------|
-| Bundle Container | `.app` 자체 | 교체됨. **읽기 전용** |
-| Data Container | `Documents/`, `Library/` | 상황에 따라 유지 |
+Bundle Container는 `.app` 자체로, 읽기 전용이며 재설치하면 교체된다. Data Container는 `Documents/`·`Library/` 쪽으로, 재설치 시 상황에 따라 유지된다.
 
 업데이트해도 로그인이 풀리지 않는 이유가 이 분리다. `.app` 안은 서명된 내용이라 앱이 자기 번들을 수정할 수 없다.
 
@@ -537,8 +512,39 @@ otool -l "$APP/Ggcard" | grep -A 2 LC_LOAD_DYLINKER
 - dyld: 프레임워크 재귀 로드 → 주소 채우기 → ObjC 등록 → initializer → `main()`
 - 매 단계가 **프레임워크 개수와 크기에 비례**한다. 이것이 "동적 프레임워크를 줄이면 실행이 빨라진다"의 근거
 - 정적 링크하면 이 작업이 빌드 시점에 끝나 있다
-- **pre-main은 코드로 못 고친다.** 링크 방식과 의존성 구성으로만 개입
 - `+load`는 우리 코드지만 pre-main에서 돈다
+
+---
+
+## 레퍼런스
+
+빌드 산출물을 직접 확인하는 명령 모음. `$APP`은 빌드된 `.app` 경로다.
+
+### 번들 열기
+
+```bash
+open -R "$APP"    # Finder에서 열기
+ls -la "$APP"
+```
+
+### Info.plist · Assets.car
+
+```bash
+head -c 100 "$APP/Info.plist"      # bplist00... 깨져 보임
+plutil -p "$APP/Info.plist"        # 정상 출력
+```
+
+```bash
+xcrun assetutil --info "$APP/Assets.car" | head -40
+```
+
+### 코드 서명
+
+```bash
+codesign -dv "$APP" 2>&1
+codesign -d --entitlements :- "$APP" 2>/dev/null
+ls "$APP/_CodeSignature"
+```
 
 ---
 
