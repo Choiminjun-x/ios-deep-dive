@@ -32,7 +32,7 @@ Manager는 캐시도 네트워크도 직접 하지 않는다. `SDImageCacheProto
 
 ### 실행 경로
 
-![SDWebImage 요청 경로](../assets/sdwebimage-load-path.svg)
+<img src="../assets/sdwebimage-load-path.svg" alt="SDWebImage 요청 경로" width="700">
 
 ### 메모리 히트는 완전히 동기다
 
