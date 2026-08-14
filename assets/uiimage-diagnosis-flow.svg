@@ -1,0 +1,54 @@
+<svg viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888780"/>
+    </marker>
+  </defs>
+
+  <!-- 범례 -->
+  <rect x="20" y="14" width="10" height="10" rx="2" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="38" y="23" font-size="12" font-weight="400" fill="#5F5E5A">청록 = 실제로 취하는 조치</text>
+
+  <!-- 1 -->
+  <rect x="180" y="48" width="320" height="58" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="340" y="74" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle">Time Profiler · 메인 스레드</text>
+  <text x="340" y="93" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">이미지가 범인인가</text>
+
+  <!-- 아니오 분기 -->
+  <path d="M 500 77 L 570 77 L 570 122" fill="none" stroke="#888780" stroke-width="0.5" marker-end="url(#a2)"/>
+  <text x="536" y="70" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">아니오</text>
+  <rect x="470" y="126" width="190" height="52" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="565" y="149" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle">이 노트 범위 밖</text>
+  <text x="565" y="167" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">렌더링 · 레이아웃 · I/O</text>
+
+  <!-- 예 -->
+  <path d="M 340 106 L 340 138" fill="none" stroke="#888780" stroke-width="0.5" marker-end="url(#a2)"/>
+  <text x="356" y="126" font-size="12" font-weight="400" fill="#5F5E5A">예</text>
+
+  <!-- 2 -->
+  <rect x="180" y="142" width="320" height="58" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="340" y="168" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle">픽셀 수 대 표시 크기</text>
+  <text x="340" y="187" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">몇 배로 과한가</text>
+
+  <path d="M 340 200 L 340 218 L 175 218 L 175 250" fill="none" stroke="#888780" stroke-width="0.5" marker-end="url(#a2)"/>
+  <path d="M 340 200 L 340 218 L 505 218 L 505 250" fill="none" stroke="#888780" stroke-width="0.5" marker-end="url(#a2)"/>
+  <text x="238" y="212" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">2배 이상</text>
+  <text x="442" y="212" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">1배 근처</text>
+
+  <!-- 조치 A -->
+  <rect x="40" y="254" width="270" height="58" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="175" y="280" font-size="14" font-weight="500" fill="#04342C" text-anchor="middle">다운샘플링</text>
+  <text x="175" y="299" font-size="12" font-weight="400" fill="#0F6E56" text-anchor="middle">시간과 메모리 동시 해결</text>
+
+  <!-- 조치 B -->
+  <rect x="370" y="254" width="270" height="58" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="505" y="280" font-size="14" font-weight="500" fill="#04342C" text-anchor="middle">byPreparingForDisplay</text>
+  <text x="505" y="299" font-size="12" font-weight="400" fill="#0F6E56" text-anchor="middle">시간만 해결</text>
+
+  <!-- 3 -->
+  <path d="M 175 312 L 175 332 L 340 332 L 340 348" fill="none" stroke="#888780" stroke-width="0.5" marker-end="url(#a2)"/>
+  <path d="M 505 312 L 505 332 L 340 332" fill="none" stroke="#888780" stroke-width="0.5"/>
+  <rect x="180" y="352" width="320" height="38" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="340" y="376" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle">Allocations · Memory Graph</text>
+</svg>

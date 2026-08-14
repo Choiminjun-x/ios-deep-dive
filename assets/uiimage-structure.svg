@@ -1,0 +1,55 @@
+<svg viewBox="0 0 680 330" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888780"/>
+    </marker>
+  </defs>
+
+  <!-- 범례 -->
+  <rect x="20" y="14" width="10" height="10" rx="2" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="38" y="23" font-size="12" font-weight="400" fill="#5F5E5A">청록 = 실제 메모리를 차지하는 지점</text>
+
+  <!-- 1층 -->
+  <rect x="30" y="56" width="180" height="58" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="120" y="82" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle">UIImage</text>
+  <text x="120" y="101" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">명찰 · scale만 보유</text>
+
+  <line x1="210" y1="85" x2="245" y2="85" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+
+  <!-- 2층 -->
+  <rect x="250" y="56" width="180" height="58" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="340" y="82" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle">CGImage</text>
+  <text x="340" y="101" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">픽셀 해석 규격</text>
+
+  <line x1="430" y1="85" x2="465" y2="85" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+
+  <!-- 3층 -->
+  <rect x="470" y="56" width="180" height="58" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="560" y="82" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle">CGDataProvider</text>
+  <text x="560" y="101" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">바이트로 가는 통로</text>
+
+  <!-- 분기 -->
+  <path d="M 560 114 L 560 150 L 200 150 L 200 186" fill="none"
+        stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+  <path d="M 560 114 L 560 150 L 480 150 L 480 186" fill="none"
+        stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+
+  <!-- 상태 1 -->
+  <rect x="60" y="190" width="280" height="62" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="200" y="216" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle">압축 바이트 (JPEG / PNG)</text>
+  <text x="200" y="235" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">그릴 수 없음 · 메모리 적음</text>
+
+  <!-- 상태 2 -->
+  <rect x="340" y="190" width="280" height="62" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="480" y="216" font-size="14" font-weight="500" fill="#04342C" text-anchor="middle">raw 비트맵</text>
+  <text x="480" y="235" font-size="12" font-weight="400" fill="#0F6E56" text-anchor="middle">바로 그릴 수 있음</text>
+
+  <!-- 디코딩 화살표 -->
+  <path d="M 200 252 L 200 285 L 480 285 L 480 258" fill="none"
+        stroke="#888780" stroke-width="0.5" marker-end="url(#arrow)"/>
+  <rect x="255" y="272" width="170" height="26" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="340" y="290" font-size="14" font-weight="500" fill="#04342C" text-anchor="middle">디코딩</text>
+
+  <text x="340" y="318" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle">CoreAnimation 커밋 시점 · 메인 스레드</text>
+</svg>
