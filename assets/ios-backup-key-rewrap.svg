@@ -1,0 +1,42 @@
+<svg viewBox="0 0 680 330" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888780"/>
+    </marker>
+  </defs>
+
+  <!-- legend -->
+  <rect x="30" y="12" width="10" height="10" rx="2" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="46" y="21" font-size="12" fill="#5F5E5A">기기 밖으로 나갈 수 있음</text>
+  <rect x="220" y="12" width="10" height="10" rx="2" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="236" y="21" font-size="12" fill="#0F6E56">기기 종속</text>
+
+  <!-- source -->
+  <rect x="30" y="118" width="180" height="60" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="46" y="142" font-size="14" font-weight="500" fill="#2C2C2A">기기의 저장 항목</text>
+  <text x="46" y="160" font-size="12" fill="#5F5E5A">기기 고유 키로 봉인</text>
+  <line x1="210" y1="148" x2="248" y2="148" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow2)"/>
+
+  <!-- gate -->
+  <rect x="256" y="118" width="150" height="60" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="272" y="142" font-size="14" font-weight="500" fill="#04342C">재봉인 가능?</text>
+  <text x="272" y="160" font-size="12" fill="#0F6E56">백업용 키로 다시 봉인</text>
+
+  <!-- pass -->
+  <path d="M 406 138 L 432 138 L 432 82 L 458 82" fill="none" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow2)"/>
+  <text x="416" y="106" font-size="12" fill="#5F5E5A">통과</text>
+  <rect x="466" y="52" width="184" height="60" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="482" y="76" font-size="14" font-weight="500" fill="#2C2C2A">백업에 담김</text>
+  <text x="482" y="94" font-size="12" fill="#5F5E5A">복원 후 그대로 사용</text>
+
+  <!-- fail -->
+  <path d="M 406 158 L 432 158 L 432 214 L 458 214" fill="none" stroke="#888780" stroke-width="0.5" marker-end="url(#arrow2)"/>
+  <text x="416" y="196" font-size="12" fill="#5F5E5A">거부</text>
+  <rect x="466" y="184" width="184" height="60" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="482" y="208" font-size="14" font-weight="500" fill="#04342C">담기지 않음</text>
+  <text x="482" y="226" font-size="12" fill="#0F6E56">ThisDeviceOnly 항목</text>
+
+  <!-- bottom note -->
+  <line x1="30" y1="282" x2="650" y2="282" stroke="#5F5E5A" stroke-width="0.5" stroke-dasharray="4 4"/>
+  <text x="30" y="304" font-size="12" fill="#5F5E5A">기기 초기화 = 고유 키 폐기 → 같은 기기를 밀고 복원해도 결과는 기기 교체와 동일</text>
+</svg>
