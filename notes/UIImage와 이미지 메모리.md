@@ -292,7 +292,7 @@ Data만 있으면 `CGImageSourceCreateWithData`를 쓴다. 다만 URL 버전은 
 
 ### Assets.car는 파일이 아니다
 
-`Assets.xcassets`의 개별 PNG는 앱 번들에 그대로 들어가지 않고 `Assets.car` 한 덩어리로 컴파일된다. 그래서 asset 카탈로그에 넣은 이미지는 경로가 **존재하지 않는다.** `.car`가 만들어지는 과정은 [Xcode 빌드 파이프라인](Xcode-build-pipeline.md)의 번들 조립 단계에 있다.
+`Assets.xcassets`의 개별 PNG는 앱 번들에 그대로 들어가지 않고 `Assets.car` 한 덩어리로 컴파일된다. 그래서 asset 카탈로그에 넣은 이미지는 경로가 **존재하지 않는다.** `.car`가 만들어지는 과정은 [Xcode 빌드 파이프라인](Xcode 빌드 파이프라인.md)의 번들 조립 단계에 있다.
 
 ```swift
 Bundle.main.path(forResource: "icon", ofType: "png")  // nil

@@ -7,7 +7,7 @@
 
 * 링크는 표준 마크다운만: `[텍스트](notes/foo.md)`. 위키링크 `[[ ]]` 사용 금지.
 * 링크 경로는 링크를 담은 파일 기준 상대 경로. `/notes/foo.md` 같은 절대 경로 금지.
-* 파일명은 영문 kebab-case, 확장자 `.md`. H1 제목은 한글.
+* `notes/` 파일명은 H1 제목을 그대로 쓴 한글, 확장자 `.md`. 그 외 폴더(`assets/` 등)의 파일명은 영문 kebab-case 유지.
 * 파일명에 번호나 접두어를 붙이지 않음. 분류는 `README.md` 표에서 관리.
 * 파일명에는 검색어가 될 단어를 포함.
 * Callout은 GitHub alert 5종만: NOTE / TIP / IMPORTANT / WARNING / CAUTION.

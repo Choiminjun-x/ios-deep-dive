@@ -17,17 +17,17 @@ iOS 개발 학습 기록과 사이드 프로젝트를 관리하는 저장소입�
 | 주제 | 구분 | 상태 | 기간 | 노트 | Repo |
 |---|---|---|---|---|---|
 | iOS 빌드 파이프라인 | 스터디 | 🟡 진행 중 | 2026.08 ~ | — | — |
-| UIImage와 이미지 메모리 | UIKit | ✅ 완료 | 2026.08 | [노트](notes/uikit-uiimage-memory.md) | - |
-| SDWebImage 내부 동작 | UIKit | ✅ 완료 | 2026.08 | [노트](notes/sdwebimage-internals.md) | — |
-| iOS 샌드박스와 데이터 저장 | 보안 | ✅ 완료 | 2026.08 | [노트](notes/ios-sandbox-and-data-storage.md) | — |
-| 스위프트 메모리 구조와 ARC | 언어·런타임 | 🟡 진행 중 | 2026.08 | [노트](notes/memory-layout-and-arc.md) | — |
+| UIImage와 이미지 메모리 | UIKit | ✅ 완료 | 2026.08 | [노트](notes/UIImage와 이미지 메모리.md) | - |
+| SDWebImage 내부 동작 | UIKit | ✅ 완료 | 2026.08 | [노트](notes/SDWebImage 내부 동작.md) | — |
+| iOS 샌드박스와 데이터 저장 | 보안 | ✅ 완료 | 2026.08 | [노트](notes/iOS 샌드박스와 데이터 저장.md) | — |
+| 스위프트 메모리 구조와 ARC | 언어·런타임 | 🟡 진행 중 | 2026.08 | [노트](notes/스위프트 메모리 구조와 ARC.md) | — |
 
 **상태 범례** · 🟡 진행 중 · ✅ 완료 · ⚪️ 예정 · 🔴 보류
 
 ## 작성 규칙
 
 - 표준 마크다운만 사용 (위키링크 `[[ ]]` 사용하지 않음)
-- 파일명은 영문 kebab-case, 문서 제목(H1)은 한글
+- `notes/` 파일명은 H1 제목을 그대로 쓴 한글, 그 외 폴더는 영문 kebab-case
 - 다이어그램은 Mermaid, 첨부 이미지는 `assets/`에 상대 경로로 참조
 
 ## 새 환경 세팅

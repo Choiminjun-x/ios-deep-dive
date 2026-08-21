@@ -18,7 +18,7 @@
 
 > 앞의 둘은 컴파일 시점에 확정되고, 뒤의 둘만 실행 중에 변한다.
 
-![메모리 네 영역](../assets/memory-regions.svg)
+<img src="../assets/memory-regions.svg" alt="메모리 네 영역" width="639">
 
 코드와 데이터는 크기와 위치가 빌드 시점에 정해져서 실행 중 신경 쓸 일이 거의 없다. 실무에서 판단이 갈리는 건 **스택과 힙 사이**뿐이다.
 
@@ -82,7 +82,7 @@ func setup() {
 
 > 구분의 실체는 "스택에 값이 놓이느냐, 주소가 놓이느냐"다.
 
-![클래스와 구조체의 저장 구조](../assets/class-vs-struct-storage.svg)
+<img src="../assets/class-vs-struct-storage.svg" alt="클래스와 구조체의 저장 구조" width="700">
 
 ```swift
 struct Point { var x: Int }
@@ -134,7 +134,7 @@ c2.items.append(4)       // c1.items는 여전히 [1,2,3]
 
 ### CoW — 복사를 쓰기 시점까지 미룬다
 
-![Copy-on-Write 동작](../assets/copy-on-write.svg)
+<img src="../assets/copy-on-write.svg" alt="Copy-on-Write 동작" width="700">
 
 쓰기가 일어나는 순간 이 버퍼를 나 말고 또 누가 보고 있는지 확인하고, 참조가 2 이상이면 그 자리에서 버퍼를 통째로 복사한 뒤 자기 복사본에만 쓴다.
 
@@ -261,7 +261,7 @@ c = nil                     // B: 1  ← 0이 안 됨
 
 > 클로저가 캡처한 값은 힙 박스로 옮겨지고, 그 박스가 self에게 되돌아올 때만 순환이다.
 
-![클로저 순환 참조](../assets/closure-retain-cycle.svg)
+<img src="../assets/closure-retain-cycle.svg" alt="클로저 순환 참조" width="700">
 
 ```swift
 class Interactor {
@@ -369,7 +369,7 @@ Swift는 `for i in 0..<3` 같은 반복문에서 매 반복마다 `i`가 새 상
 
 > 기준은 키워드가 아니라 수명 — 함수 프레임보다 오래 살아야 하면 힙.
 
-![escaping 여부에 따른 저장 위치](../assets/escaping-closure-box.svg)
+<img src="../assets/escaping-closure-box.svg" alt="escaping 여부에 따른 저장 위치" width="700">
 
 non-escaping이면 클로저 수명이 함수 안에 갇히므로 컴파일러가 힙 박스 없이 처리할 수 있다. 캡처한 값도 함수가 사는 동안만 필요하기 때문이다.
 

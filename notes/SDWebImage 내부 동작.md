@@ -11,7 +11,7 @@
 
 기준 버전은 SDWebImage 5.x. 4.x는 디코딩 정책과 thumbnail 관련 구조가 다르다.
 
-전제로 두고 가는 내용은 [UIImage와 이미지 메모리](uikit-uiimage-memory.md)에 있다.
+전제로 두고 가는 내용은 [UIImage와 이미지 메모리](UIImage와 이미지 메모리.md)에 있다.
 
 ---
 

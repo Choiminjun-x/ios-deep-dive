@@ -340,7 +340,7 @@ Ggcard.app/
 
 바이너리로 바뀐 `Info.plist`는 `plutil`로 확인할 수 있다([레퍼런스](#레퍼런스)).
 
-전부 **실행 시점을 빠르게 하려는 것**이다. XML 파싱과 파일 탐색은 느리고, 어차피 빌드 때 한 번 하면 되는 일이다. `UIImage(named:)`가 파일 시스템을 뒤지지 않고 `Assets.car`를 조회하는 이유다. 런타임에서 `.car`를 어떻게 조회하고 캐싱하는지는 [UIImage와 이미지 메모리](uikit-uiimage-memory.md)에 있다.
+전부 **실행 시점을 빠르게 하려는 것**이다. XML 파싱과 파일 탐색은 느리고, 어차피 빌드 때 한 번 하면 되는 일이다. `UIImage(named:)`가 파일 시스템을 뒤지지 않고 `Assets.car`를 조회하는 이유다. 런타임에서 `.car`를 어떻게 조회하고 캐싱하는지는 [UIImage와 이미지 메모리](UIImage와 이미지 메모리.md)에 있다.
 
 ### Asset Catalog에 들어가는 것
 
