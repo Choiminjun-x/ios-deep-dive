@@ -1,0 +1,44 @@
+<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif">
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#888780"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="18" font-size="12" fill="#5F5E5A">청록 = 힙에 놓인 실체</text>
+
+  <text x="30" y="46" font-size="14" font-weight="500" fill="#2C2C2A">클래스</text>
+  <text x="98" y="46" font-size="12" fill="#5F5E5A">주소를 나눠 가짐</text>
+  <text x="30" y="70" font-size="12" fill="#5F5E5A">스택</text>
+  <text x="205" y="70" font-size="12" fill="#0F6E56">힙</text>
+
+  <rect x="30" y="80" width="120" height="40" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="46" y="105" font-size="14" font-weight="500" fill="#2C2C2A">n1 · 주소</text>
+
+  <rect x="30" y="136" width="120" height="40" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="46" y="161" font-size="14" font-weight="500" fill="#2C2C2A">n2 · 주소</text>
+
+  <path d="M150,100 L198,120" stroke="#888780" stroke-width="1" fill="none" marker-end="url(#a)"/>
+  <path d="M150,156 L198,136" stroke="#888780" stroke-width="1" fill="none" marker-end="url(#a)"/>
+
+  <rect x="205" y="98" width="120" height="60" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="221" y="124" font-size="14" font-weight="500" fill="#04342C">Node 인스턴스</text>
+  <text x="221" y="144" font-size="12" fill="#0F6E56">x = 99 · 하나뿐</text>
+
+  <line x1="345" y1="40" x2="345" y2="200" stroke="#5F5E5A" stroke-width="0.5"/>
+
+  <text x="375" y="46" font-size="14" font-weight="500" fill="#2C2C2A">구조체</text>
+  <text x="443" y="46" font-size="12" fill="#5F5E5A">값을 각자 소유</text>
+  <text x="375" y="70" font-size="12" fill="#5F5E5A">스택</text>
+
+  <rect x="375" y="80" width="160" height="40" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="391" y="105" font-size="14" font-weight="500" fill="#2C2C2A">a · x = 1</text>
+
+  <rect x="375" y="136" width="160" height="40" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="391" y="161" font-size="14" font-weight="500" fill="#2C2C2A">b · x = 99</text>
+
+  <text x="555" y="124" font-size="12" fill="#5F5E5A">힙에는</text>
+  <text x="555" y="142" font-size="12" fill="#5F5E5A">아무것도 없음</text>
+
+  <text x="30" y="222" font-size="12" fill="#5F5E5A">클래스는 스택에 주소 8바이트, 구조체는 스택에 값 자체</text>
+</svg>

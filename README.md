@@ -20,6 +20,7 @@ iOS 개발 학습 기록과 사이드 프로젝트를 관리하는 저장소입�
 | UIImage와 이미지 메모리 | UIKit | ✅ 완료 | 2026.08 | [노트](notes/uikit-uiimage-memory.md) | - |
 | SDWebImage 내부 동작 | UIKit | ✅ 완료 | 2026.08 | [노트](notes/sdwebimage-internals.md) | — |
 | iOS 샌드박스와 데이터 저장 | 보안 | ✅ 완료 | 2026.08 | [노트](notes/ios-sandbox-and-data-storage.md) | — |
+| 스위프트 메모리 구조와 ARC | 언어·런타임 | 🟡 진행 중 | 2026.08 | [노트](notes/memory-layout-and-arc.md) | — |
 
 **상태 범례** · 🟡 진행 중 · ✅ 완료 · ⚪️ 예정 · 🔴 보류
 

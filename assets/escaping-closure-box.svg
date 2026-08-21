@@ -1,0 +1,37 @@
+<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif">
+  <defs>
+    <marker id="d" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#888780"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="18" font-size="12" fill="#5F5E5A">청록 = 힙</text>
+
+  <text x="30" y="46" font-size="14" font-weight="500" fill="#2C2C2A">non-escaping</text>
+  <text x="145" y="46" font-size="12" fill="#5F5E5A">함수 안에서 수명이 끝남</text>
+
+  <rect x="30" y="62" width="270" height="110" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="48" y="86" font-size="12" fill="#5F5E5A">함수 스택 프레임</text>
+  <rect x="48" y="98" width="234" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="66" y="122" font-size="14" font-weight="500" fill="#2C2C2A">클로저 + 캡처한 값</text>
+  <text x="66" y="142" font-size="12" fill="#5F5E5A">프레임과 함께 사라짐</text>
+
+  <text x="30" y="196" font-size="12" fill="#5F5E5A">힙 할당 없음 · ARC 없음 · 순환 불가</text>
+
+  <line x1="345" y1="40" x2="345" y2="210" stroke="#5F5E5A" stroke-width="0.5"/>
+
+  <text x="375" y="46" font-size="14" font-weight="500" fill="#2C2C2A">@escaping</text>
+  <text x="470" y="46" font-size="12" fill="#5F5E5A">함수보다 오래 삶</text>
+
+  <rect x="375" y="62" width="150" height="110" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="393" y="86" font-size="12" fill="#5F5E5A">함수 스택 프레임</text>
+  <text x="393" y="124" font-size="12" fill="#5F5E5A">리턴하면 사라짐</text>
+
+  <path d="M525,117 L543,117" stroke="#888780" stroke-width="1" fill="none" marker-end="url(#d)"/>
+
+  <rect x="550" y="89" width="100" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="566" y="113" font-size="14" font-weight="500" fill="#04342C">힙 박스</text>
+  <text x="566" y="133" font-size="12" fill="#0F6E56">클로저와 캡처값</text>
+
+  <text x="375" y="196" font-size="12" fill="#5F5E5A">힙 할당 · ARC 대상 · self를 붙들면 순환 가능</text>
+</svg>

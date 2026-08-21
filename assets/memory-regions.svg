@@ -1,0 +1,23 @@
+<svg viewBox="0 0 680 330" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif">
+  <text x="30" y="18" font-size="12" fill="#5F5E5A">청록 = 실행 중 내용이 변하는 영역</text>
+
+  <rect x="30" y="34" width="620" height="62" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="52" y="62" font-size="14" font-weight="500" fill="#2C2C2A">코드</text>
+  <text x="52" y="82" font-size="12" fill="#5F5E5A">기계어, 문자열 리터럴</text>
+  <text x="628" y="74" font-size="12" fill="#5F5E5A" text-anchor="end">앱 종료까지 유지</text>
+
+  <rect x="30" y="108" width="620" height="62" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="52" y="136" font-size="14" font-weight="500" fill="#2C2C2A">데이터</text>
+  <text x="52" y="156" font-size="12" fill="#5F5E5A">전역 변수, static 프로퍼티</text>
+  <text x="628" y="148" font-size="12" fill="#5F5E5A" text-anchor="end">앱 종료까지 유지</text>
+
+  <rect x="30" y="182" width="620" height="62" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="52" y="210" font-size="14" font-weight="500" fill="#04342C">스택</text>
+  <text x="52" y="230" font-size="12" fill="#0F6E56">지역 변수, 파라미터</text>
+  <text x="628" y="222" font-size="12" fill="#0F6E56" text-anchor="end">함수가 끝나면 사라짐</text>
+
+  <rect x="30" y="256" width="620" height="62" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="52" y="284" font-size="14" font-weight="500" fill="#04342C">힙</text>
+  <text x="52" y="304" font-size="12" fill="#0F6E56">클래스 인스턴스, 클로저</text>
+  <text x="628" y="296" font-size="12" fill="#0F6E56" text-anchor="end">ARC가 판단해 해제</text>
+</svg>

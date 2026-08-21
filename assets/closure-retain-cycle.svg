@@ -1,0 +1,54 @@
+<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif">
+  <defs>
+    <marker id="c" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#888780"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="18" font-size="12" fill="#5F5E5A">청록 = 힙에 놓인 객체</text>
+
+  <text x="30" y="46" font-size="14" font-weight="500" fill="#2C2C2A">1 · 캡처 리스트 없음</text>
+  <text x="190" y="46" font-size="12" fill="#5F5E5A">화살표가 제자리로 돌아옴</text>
+
+  <rect x="30" y="88" width="90" height="40" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="52" y="113" font-size="14" font-weight="500" fill="#2C2C2A">i · 주소</text>
+  <path d="M120,108 L173,108" stroke="#888780" stroke-width="1" fill="none" marker-end="url(#c)"/>
+
+  <rect x="180" y="66" width="200" height="84" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="196" y="90" font-size="14" font-weight="500" fill="#04342C">인스턴스 A</text>
+  <text x="340" y="90" font-size="12" fill="#0F6E56" text-anchor="end">count 2</text>
+  <rect x="196" y="102" width="168" height="34" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="210" y="124" font-size="12" fill="#5F5E5A">onComplete 프로퍼티</text>
+
+  <path d="M364,119 L443,119" stroke="#888780" stroke-width="1" fill="none" marker-end="url(#c)"/>
+
+  <rect x="450" y="98" width="160" height="42" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="466" y="124" font-size="14" font-weight="500" fill="#04342C">클로저 B</text>
+  <text x="596" y="124" font-size="12" fill="#0F6E56" text-anchor="end">count 1</text>
+
+  <path d="M530,140 L530,170 L280,170 L280,152" stroke="#888780" stroke-width="1" fill="none" marker-end="url(#c)"/>
+  <text x="330" y="188" font-size="12" fill="#5F5E5A">self를 강하게 캡처 — A에 +1</text>
+
+  <text x="30" y="188" font-size="12" fill="#5F5E5A">i = nil 이어도</text>
+  <text x="30" y="206" font-size="12" fill="#5F5E5A">A는 1이 남음</text>
+
+  <line x1="30" y1="228" x2="650" y2="228" stroke="#5F5E5A" stroke-width="0.5"/>
+
+  <text x="30" y="260" font-size="14" font-weight="500" fill="#2C2C2A">2 · [weak self]</text>
+  <text x="155" y="260" font-size="12" fill="#5F5E5A">고리가 한 칸 끊김</text>
+
+  <rect x="30" y="288" width="90" height="40" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="52" y="313" font-size="14" font-weight="500" fill="#2C2C2A">i · 주소</text>
+  <path d="M120,308 L173,308" stroke="#888780" stroke-width="1" fill="none" marker-end="url(#c)"/>
+
+  <rect x="180" y="288" width="200" height="40" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="196" y="313" font-size="14" font-weight="500" fill="#04342C">인스턴스 A</text>
+  <text x="364" y="313" font-size="12" fill="#0F6E56" text-anchor="end">count 1</text>
+
+  <path d="M380,308 L443,308" stroke="#888780" stroke-width="1" fill="none" marker-end="url(#c)"/>
+
+  <rect x="450" y="288" width="160" height="40" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="466" y="313" font-size="14" font-weight="500" fill="#04342C">클로저 B</text>
+
+  <text x="628" y="313" font-size="12" fill="#5F5E5A" text-anchor="end">되돌아오는 화살표 없음</text>
+</svg>
