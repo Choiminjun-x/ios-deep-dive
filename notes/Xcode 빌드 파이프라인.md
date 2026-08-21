@@ -21,7 +21,7 @@ Xcode에서 Run 버튼을 누르면 앱이 실행되기까지 무슨 일이 일�
 
 ### 스킴은 설정이 아니라 선택지 묶음
 
-Xcode 좌상단의 `▶ Ggcard > iPhone 15`에서 앞쪽이 스킴이다. 코드도 설정값도 아니고, **어떤 상황에서 어떤 설정을 쓸지 적어둔 메모**에 가깝다.
+Xcode 좌상단의 `▶ MyApp > iPhone 15`에서 앞쪽이 스킴이다. 코드도 설정값도 아니고, **어떤 상황에서 어떤 설정을 쓸지 적어둔 메모**에 가깝다.
 
 같은 앱이라도 목적에 따라 다르게 빌드해야 하기 때문에 존재한다.
 
@@ -102,7 +102,7 @@ Xcode 기본값
 ```
 LoginViewController.swift  →  LoginViewController.o
 Assets.xcassets            →  Assets.car
-[모든 .o 파일들]            →  Ggcard
+[모든 .o 파일들]            →  MyApp
 ```
 
 각 작업마다 이렇게 판단한다.
@@ -284,22 +284,22 @@ let x = items.filter { $0.count > 3 }.map { $0.name }
 
 CocoaPods는 `use_frameworks!` 유무로, SPM은 기본 자동으로 결정된다.
 
-### 실측 — 경기지역화폐
+### 실측 예시
 
 ```bash
-otool -L "$APP/Ggcard.debug.dylib" | grep @rpath
+otool -L "$APP/MyApp.debug.dylib" | grep @rpath
 ls "$APP/Frameworks"
 ```
 
 `@rpath`로 시작하면 앱 번들 안에 있는 것(동적), `/usr/lib/`는 시스템이다.
 
-- 직접 참조 17개, `Frameworks/` 폴더에는 **24개**
-- 차이는 간접 의존 — `MapboxCommon`, `FirebaseAnalytics` 등은 다른 프레임워크가 끌어온다
+- 직접 참조한 프레임워크 개수보다 `Frameworks/` 폴더에 실제로 들어간 개수가 더 많았다
+- 차이는 간접 의존 — 지도 SDK, 분석 SDK 같은 것들은 다른 프레임워크를 끌어온다
 - RxSwift, SnapKit, Alamofire는 목록에 없다 → **정적으로 링크됨**
-- Kona 계열, 광고 SDK, Mapbox·Routo 계열은 전부 동적
+- 벤더가 배포하는 SDK(지도, 광고, 자체 브랜드 SDK 등)는 대부분 동적
 
 > [!NOTE]
-> Debug 빌드에는 `Ggcard.debug.dylib`이 끼어 있다. Xcode가 증분 빌드를 빠르게 하려고 앱 코드를 별도 dylib으로 빼고 실행 파일은 껍데기만 남기는 것이다. **Release 빌드에는 없다.** 그래서 `otool -L`을 실행 파일에 걸면 이 dylib 하나만 보인다.
+> Debug 빌드에는 `MyApp.debug.dylib`이 끼어 있다. Xcode가 증분 빌드를 빠르게 하려고 앱 코드를 별도 dylib으로 빼고 실행 파일은 껍데기만 남기는 것이다. **Release 빌드에는 없다.** 그래서 `otool -L`을 실행 파일에 걸면 이 dylib 하나만 보인다.
 
 ### 정리
 
@@ -307,7 +307,7 @@ ls "$APP/Frameworks"
 - **정적** = 빌드 때 복사. 바이너리 커지고 실행 빠름
 - **동적** = 이름만 기록, 실행 때 dyld가 로드. 바이너리 작고 실행 느림
 - 정적/동적은 라이브러리 성격이 아니라 **배포 형태**로 갈린다
-- 산출물은 `Ggcard.app/Ggcard` (Mach-O 실행 파일)
+- 산출물은 `MyApp.app/MyApp` (Mach-O 실행 파일)
 
 ---
 
@@ -320,12 +320,12 @@ ls "$APP/Frameworks"
 Finder에서 파일 하나로 보이지만 디렉터리다. 우클릭 → 패키지 내용 보기로 열린다.
 
 ```
-Ggcard.app/
-├── Ggcard              ← 4단계 산출물
+MyApp.app/
+├── MyApp                ← 4단계 산출물
 ├── Info.plist
 ├── Assets.car
 ├── Base.lproj/
-└── Frameworks/         ← 동적 프레임워크 24개
+└── Frameworks/          ← 동적 프레임워크들
 ```
 
 터미널에서 여는 명령은 [레퍼런스](#레퍼런스)에.
@@ -400,7 +400,7 @@ Provisioning Profile에 적힌 것: 이 앱 ID는 / 이 인증서로 서명할 �
 ```
 Frameworks/*.framework   ← 먼저
        ↓
-Ggcard.app               ← 나중
+MyApp.app               ← 나중
 ```
 
 바깥을 먼저 서명하면 안쪽을 서명하는 순간 파일이 바뀌어 바깥 해시가 깨진다. 빌드 로그에 `CodeSign`이 여러 번 보이는 이유다.
@@ -435,7 +435,7 @@ Bundle Container는 `.app` 자체로, 읽기 전용이며 재설치하면 교체
 업데이트해도 로그인이 풀리지 않는 이유가 이 분리다. `.app` 안은 서명된 내용이라 앱이 자기 번들을 수정할 수 없다.
 
 > [!WARNING]
-> **Keychain은 컨테이너 밖의 시스템 저장소다.** 앱을 삭제해도 데이터가 남을 수 있다. 코나잔액처럼 카드 번호를 Keychain에 저장하는 구조라면, 재설치 후 이전 데이터가 복원되는 동작이 여기서 나온다. 의도한 것이 아니면 첫 실행 시 정리하는 처리가 필요하다. iOS 버전에 따라 동작이 달라진 이력이 있어 실제 확인이 필요하다.
+> **Keychain은 컨테이너 밖의 시스템 저장소다.** 앱을 삭제해도 데이터가 남을 수 있다. 카드 번호처럼 민감한 값을 Keychain에 저장하는 구조라면, 재설치 후 이전 데이터가 복원되는 동작이 여기서 나온다. 의도한 것이 아니면 첫 실행 시 정리하는 처리가 필요하다. iOS 버전에 따라 동작이 달라진 이력이 있어 실제 확인이 필요하다.
 
 ### 디버거가 붙는다는 것
 
@@ -443,7 +443,7 @@ Xcode Run은 설치 후 자동 실행하면서 디버거를 붙인다. 앱 프�
 
 ```
 [맥]                    [기기]
-Xcode/LLDB   ←────→   debugserver  ←──  Ggcard 프로세스
+Xcode/LLDB   ←────→   debugserver  ←──  MyApp 프로세스
 ```
 
 프로세스를 정지 상태로 만든 뒤 연결하고 실행을 시작하므로, 앱 시작 직후 코드에도 브레이크포인트가 걸린다. 다만 pre-main에는 우리 코드가 없어 걸 데가 없다.
@@ -470,7 +470,7 @@ Xcode/LLDB   ←────→   debugserver  ←──  Ggcard 프로세스
 커널은 바이너리를 열어 "이 앱을 실행하려면 이 프로그램을 먼저 써라"를 읽는다.
 
 ```bash
-otool -l "$APP/Ggcard" | grep -A 2 LC_LOAD_DYLINKER
+otool -l "$APP/MyApp" | grep -A 2 LC_LOAD_DYLINKER
 # name /usr/lib/dyld
 ```
 

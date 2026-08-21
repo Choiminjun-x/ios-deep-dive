@@ -270,7 +270,7 @@ api.fetchCardBalance(cardID) { balance in
 
 ## 미확인 사항
 
-- 지역화폐 프로젝트에 설치된 SDWebImage 실제 버전 미확인. 이 노트는 5.x 기준이며 4.x는 디코딩 정책과 thumbnail 구조가 다르다.
+- 적용 대상 프로젝트에 설치된 SDWebImage 실제 버전 미확인. 이 노트는 5.x 기준이며 4.x는 디코딩 정책과 thumbnail 구조가 다르다.
 - `NSCache`의 제거 정책이 LRU인지 문서화된 보장이 없다. 시뮬레이터와 실기기 동작이 다를 수 있다는 것까지만 확인.
 - 캐시 키 생성 규칙과 `cacheKeyFilter`, transformer 적용 시 원본/변형본 저장 구조 — 이번 범위에서 제외.
 - 다운로드 큐 내부 동작(우선순위, 중복 요청 병합) — 이번 범위에서 제외.

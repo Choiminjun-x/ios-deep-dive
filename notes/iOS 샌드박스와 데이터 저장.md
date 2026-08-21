@@ -21,7 +21,7 @@
 
 유닉스의 전통 권한 모델은 **사용자 단위**다. 프로세스는 자기를 실행한 사용자의 권한을 그대로 물려받는다.
 
-iOS에서는 이게 문제가 된다. 모든 서드파티 앱이 `mobile`이라는 **같은 사용자**로 실행되기 때문에, 유닉스 권한만으로는 앱 A와 앱 B를 구분할 근거가 없다. 지역화폐 앱의 토큰을 아무 앱이나 읽을 수 있다는 뜻이 된다.
+iOS에서는 이게 문제가 된다. 모든 서드파티 앱이 `mobile`이라는 **같은 사용자**로 실행되기 때문에, 유닉스 권한만으로는 앱 A와 앱 B를 구분할 근거가 없다. 다른 앱의 토큰을 아무 앱이나 읽을 수 있다는 뜻이 된다.
 
 ### DAC와 MAC
 
@@ -136,7 +136,7 @@ Apple은 후자를 택했다.
 둘 다 백업되고 안 지워진다. 갈리는 기준은 **사용자에게 보여줄 수 있는가**다. `Info.plist`에 `UIFileSharingEnabled`를 켜면 `Documents`만 파일 앱에 노출된다.
 
 - 사용자가 "내가 만든 것"으로 인식 → `Documents` (예: 저장한 영수증)
-- 앱이 내부적으로 관리 → `Application Support` (예: 로컬 DB, 지자체 구성값)
+- 앱이 내부적으로 관리 → `Application Support` (예: 로컬 DB, 설정값)
 
 > [!WARNING]
 > `Application Support`는 기본으로 만들어져 있지 않다. `FileManager.urls(for:.applicationSupportDirectory,…)`는 경로를 계산해 돌려줄 뿐이므로, `createDirectory(withIntermediateDirectories: true)`를 먼저 하지 않으면 쓰기가 실패한다.
@@ -154,7 +154,7 @@ let data = try! Data(contentsOf: cacheURL)
 
 ### 세 번째 조합 만들기
 
-"다시 받을 수는 있지만 없으면 곤란한 것"이 애매한 케이스다. 동적 스플래시의 지자체 로고가 여기 해당한다 — `Caches`에 두면 지워질 수 있고, `Documents`에 두면 백업 낭비다.
+"다시 받을 수는 있지만 없으면 곤란한 것"이 애매한 케이스다. 동적 스플래시의 로고 이미지가 여기 해당한다 — `Caches`에 두면 지워질 수 있고, `Documents`에 두면 백업 낭비다.
 
 `Application Support`에 두고 백업만 제외하면 된다.
 
@@ -225,7 +225,7 @@ Apple은 재부팅 후 첫 잠금해제 이전을 **BFU**(Before First Unlock), 
 
 두 번째 그룹은 키 문제가 아니라 "생체만으로 계속 신뢰하지 않겠다"는 정책이다. 생체는 **거부할 수 없다**는 약점이 있다 — 강압 상황에서 얼굴은 향하게 만들 수 있지만 패스코드는 본인이 입력해야 한다.
 
-### 실무에서 갈리는 지점 — EDD 신분증 이미지
+### 실무에서 갈리는 지점 — 신분증 이미지
 
 촬영한 신분증 이미지는 개인정보라 기본값으로는 부족하다.
 
@@ -268,7 +268,7 @@ try data.write(to: url, options: [.completeFileProtection])
 
 핵심 차이는 이것이다. **파일은 "어디에 두느냐"로 성격이 정해지지만, Keychain은 "어떤 조건으로 저장하느냐"로 정해진다.** 조건이 항목에 박혀 있어 읽을 때 우회할 수 없다.
 
-Keychain은 컨테이너 안이 아니라 시스템이 관리하는 별도 DB에 있다. 코나잔액에서 카드번호를 `UserDefaults` 대신 Keychain에 넣은 것이 이 지점에서 값을 한다 — `UserDefaults`는 `Library/Preferences`의 **평문 plist**이고 백업에도 그대로 들어간다.
+Keychain은 컨테이너 안이 아니라 시스템이 관리하는 별도 DB에 있다. 카드번호처럼 민감한 값을 `UserDefaults` 대신 Keychain에 넣는 것이 이 지점에서 값을 한다 — `UserDefaults`는 `Library/Preferences`의 **평문 plist**이고 백업에도 그대로 들어간다.
 
 ### 두 개의 다른 축
 
@@ -287,7 +287,7 @@ Keychain은 컨테이너 안이 아니라 시스템이 관리하는 별도 DB에
 | `AfterFirstUnlock` | 부팅 후 한 번 풀면 이후 계속 |
 | `WhenPasscodeSetThisDeviceOnly` | 패스코드 설정된 기기에서만, 백업 제외 |
 
-지역화폐 앱에서 실제로 나오는 상황 — **재부팅 직후 푸시를 받아 백그라운드로 토큰을 갱신해야 하는데, 토큰이 `WhenUnlocked`면 읽기가 실패한다.** 재현이 어려워 놓치기 쉽다.
+실무에서 실제로 나오는 상황 — **재부팅 직후 푸시를 받아 백그라운드로 토큰을 갱신해야 하는데, 토큰이 `WhenUnlocked`면 읽기가 실패한다.** 재현이 어려워 놓치기 쉽다.
 
 기준은 이렇다. 백그라운드에서 필요한 자격증명은 `AfterFirstUnlock`, 사용자 앞에서만 쓰는 값은 `WhenUnlocked`.
 
