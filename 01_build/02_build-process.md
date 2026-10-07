@@ -47,25 +47,126 @@ print("RELEASE에서 할 코드")
 - Swift용: `swiftc`
 - C 언어 계열(C / ObjC / C++)용: `clang`
 
+### Swift는 AOT 컴파일
+
+- JVM 같은 런타임이 중간에 없다
+- 빌드 결과물이 곧 그 CPU 아키텍처용 기계어 → "이 CPU, 이 OS 전용" 바이너리 완성 → 실행 시점에 번역 X, 앱 시작이 빠름, 대신 범용성을 잃는다
+
+### 타겟 트리플
+
+컴파일러가 "무엇을 위해 만들지"를 지정하는 문자열
+
+```
+arm64 - apple - ios17.0 - simulator
+  │       │        │          │
+  │       │        │          └ 환경
+  │       │        └ 최소 OS 버전
+  │       └ 벤더
+  └ CPU 아키텍처
+```
+
+- Apple Silicon Mac에서는 시뮬레이터와 실기기가 **CPU는 똑같이 arm64인데도 다른 산출물**이다. 맨 끝 `-simulator` 하나가 갈라놓는다
+- Xcode가 빌드 세팅(아키텍처, SDK, `IPHONEOS_DEPLOYMENT_TARGET`)으로 트리플을 조립해 `swiftc -target …`으로 넘긴다 ([Xcode 프로젝트 구조와 빌드 설정](01_xcode-project-settings.md) 3번)
+
+### 시뮬레이터용 빌드와 실기기용 빌드는 애초에 다른 산출물이다
+
+| | 실기기 | 시뮬레이터 |
+|---|---|---|
+| 타겟 트리플 | `arm64-apple-ios` | `arm64-apple-ios-simulator` |
+| SDK | `iphoneos` | `iphonesimulator` |
+| 산출물 폴더 | `Debug-iphoneos` | `Debug-iphonesimulator` |
+| 링크되는 시스템 프레임워크 | iOS 실물 | macOS 위에서 도는 iOS 구현체 |
+
+- 산출물 폴더는 DerivedData의 `Build/Products/` 아래에 생긴다 ([Xcode 프로젝트 구조와 빌드 설정](01_xcode-project-settings.md) 4번)
+
 ## 3. Assembler - 어셈블러
 
-- Assembly code를 **재배치 가능한 machine code**로 바꾼다 → Mach-O 파일(코드와 데이터의 모음) 생성
+- Assembly code를 **재배치 가능한 machine code**로 바꾼다 → Mach-O 파일(코드와 데이터의 모음) 생성 (구조는 4번)
 - ⚠️ **개념상의 단계.** 실제 Xcode 빌드에서는 swiftc/clang 내부의 LLVM이 기계어까지 바로 생성하므로 어셈블러가 따로 실행되지 않음 (빌드 로그에 `as` 호출이 없음)
 
 ## 4. Linker - 링커
 
 단일 Mach-O 실행 파일을 만들기 위해 다양한 `.o` 파일과 라이브러리를 병합하는 프로그램
 
-- 어셈블러(컴파일) 단계 → **Relocatable Object File** 타입의 Mach-O 생성 (`.o`)
+- 어셈블러(컴파일) 단계 → **Relocatable Object File** 타입의 Mach-O 생성 (`.o`, Header 종류 `MH_OBJECT`)
 - 링커 단계 → `Build Settings > Mach-O Type`에 따라 결과물 생성
 
 ![Mach-O Type별 결과물](images/build-process-macho-type.png)
 
-| Mach-O Type | 만드는 도구 | 결과 |
-|---|---|---|
-| Executable | `ld` | 앱 실행 파일 |
-| Dynamic Library | `ld` | `.dylib` / 동적 `.framework` |
-| Static Library | `libtool` | `.a` / 정적 `.framework` — **링킹이 아니라 `.o`를 묶기만 함** |
+| Mach-O Type | 만드는 도구 | 결과 | Header 종류 |
+|---|---|---|---|
+| Executable | `ld` | 앱 실행 파일 | `MH_EXECUTE` |
+| Dynamic Library | `ld` | `.dylib` / 동적 `.framework` | `MH_DYLIB` |
+| Static Library | `libtool` | `.a` / 정적 `.framework` — **링킹이 아니라 `.o`를 묶기만 함** | 없음 (Mach-O가 아니라 `.o` 묶음) |
+
+### Mach-O 구조
+
+Apple 플랫폼의 실행 파일 포맷. "Mach Object"의 줄임말, macOS의 뿌리인 Mach 커널에서 유래
+
+- 포맷 → 기계어의 설명서. 기계어만 덜렁 있으면 OS가 그걸 어떻게 메모리에 올릴지 모른다
+
+| OS | 포맷 |
+|---|---|
+| Apple (macOS/iOS) | **Mach-O** |
+| Linux | ELF |
+| Windows | PE (`.exe`, `.dll`) |
+
+```
+┌─────────────────┐
+│ Header          │  종류(실행파일/라이브러리), CPU 아키텍처
+├─────────────────┤
+│ Load Commands   │  진입점, 의존 라이브러리 목록,
+│                 │  최소 OS 버전, 코드 서명 위치
+├─────────────────┤
+│ __TEXT          │  기계어 코드, 상수 (읽기 전용)
+│ __DATA          │  전역 변수 (읽기/쓰기)
+└─────────────────┘
+```
+
+- **Header의 종류 필드** → `MH_EXECUTE`(실행 파일) / `MH_DYLIB`(동적 라이브러리). `file` 명령이 "executable"과 "shared library"를 구분해 찍어주는 근거. 위 표의 Mach-O Type 설정이 이 값으로 들어간다
+- **Load Commands의 진입점** — 실행 파일에만 있고 라이브러리에는 없다. 둘을 가르는 기준은 Header의 종류 필드이고, 진입점 유무는 그 결과다
+- **Load Commands의 의존 목록** — 여기 적힌 프레임워크의 실물이 번들에 없으면 `dyld: Library not loaded` (→ 7번)
+- **최소 OS 버전** — 타겟 트리플의 `ios17.0`이 여기 박힌다 (→ 2번)
+- **코드 서명 정보** — 서명(도장 + 인증서)이 붙는 자리 ([iOS 코드 서명](03_code-signing.md) 4번)
+
+**직접 보기**
+
+```bash
+otool -h <바이너리>    # 헤더 (종류, 아키텍처)
+otool -L <바이너리>    # 의존하는 라이브러리 목록
+```
+
+`otool -L`은 **내 앱이 실행되려면 기기에 뭐가 있어야 하는지**의 목록이다.
+
+### .xcframework
+
+2번에서 본 것처럼 시뮬레이터용과 실기기용은 다른 산출물이라, 링커는 타겟 트리플이 다른 바이너리를 묶지 못한다. 서드파티 라이브러리가 실기기용 바이너리만 담고 있으면 시뮬레이터에서 링크가 깨진다.
+
+`.xcframework`는 여러 아키텍처·플랫폼용 바이너리를 한 묶음에 담아, 빌드할 때 맞는 걸 골라 쓰게 하는 배포 포맷이다. 소스 없이 컴파일된 라이브러리를 배포할 때 쓴다.
+
+```
+Alamofire.xcframework/
+├── Info.plist                      ← 어느 폴더가 어느 조합용인지 목록
+├── ios-arm64/
+│   └── Alamofire.framework         ← 실기기용
+├── ios-arm64_x86_64-simulator/
+│   └── Alamofire.framework         ← 시뮬레이터용
+└── macos-arm64_x86_64/
+    └── Alamofire.framework
+```
+
+→ Xcode가 빌드 시 타겟 트리플을 보고 알맞은 폴더 하나를 고른다. 선택은 빌드 타임에 끝나고, `.app` 안에는 고른 것 하나만 들어간다.
+
+**.xcframework가 프로젝트 파일에 없는 이유**
+
+- `.xcframework`는 컴파일된 결과물을 남에게 건네줄 때 쓰는 포장
+- 라이브러리라고 다 그런 건 아니고, 바이너리 형태로 전달된 라이브러리만 맞는 슬라이스를 골라야 함 → `.xcframework`
+- 바이너리 형태 → 이미 컴파일된 것
+- 소스로 주느냐, 바이너리를 주느냐. 바이너리로 주는 이유는 보통 둘 중 하나 → 소스를 공개하고 싶지 않거나(상용 SDK), 빌드가 오래 걸려서 미리 말아둔 것
+
+### 실무에서
+
+- 시뮬레이터에서만 `building for iOS Simulator, but linking in object file built for iOS` 같은 링크 에러가 나면(Xcode 버전마다 문구가 조금 다름), 라이브러리에 시뮬레이터용 슬라이스가 없다는 뜻이다 → `.xcframework`로 배포된 버전을 받는다
 
 ## 5. Xcode 빌드 버튼 클릭 후 전체 흐름
 
@@ -128,9 +229,23 @@ MyApp.app/
 
 ## 7. Loader - 로더
 
+설치되는 단위는 `.app` 폴더 전체(앱 번들), OS가 실제로 실행하는 건 그 안의 실행 파일 하나(앱 바이너리)
+
+```
+MyApp.app/        ← 이게 통째로 폰에 복사됨
+└── MyApp         ← OS가 메모리에 올려 진입점부터 돌리는 건 이 파일
+```
+
+1. `.app` 폴더가 기기로 복사된다 (설치)
+2. 아이콘을 탭한다
+3. OS가 `Info.plist`를 읽어 "실행 파일 이름이 뭔지" 확인한다
+4. 그 파일을 메모리에 올리고 진입점부터 실행한다
+
+마지막 단계를 자세히 보면:
+
 - 커널(XNU)이 앱 실행 파일과 **dyld**를 메모리에 **매핑**
   - 통째 복사가 아니라 매핑 → 실제 접근하는 페이지만 그때그때 읽음
-- dyld가 `LC_LOAD_DYLIB`을 읽고 동적 라이브러리 로딩 → 빈칸(심볼) 채우기 → 초기화 → `main` 호출
+- dyld가 `LC_LOAD_DYLIB`(Load Commands의 의존 목록)을 읽고 동적 라이브러리 로딩 → 빈칸(심볼) 채우기 → 초기화 → `main` 호출
 - 이 구간이 **Pre-main 단계**
 
 ## 핵심 정리
@@ -140,6 +255,20 @@ MyApp.app/
 > **실행 시점:** 커널이 매핑 → dyld가 동적 라이브러리를 연결 → `main`
 >
 > 링커는 빈칸(U)과 정의(T)를 짝짓고, 동적 링킹은 그 짝짓기를 실행 시점으로 미룬 것이다.
+>
+> **산출물의 형식:** `.o` · 실행 파일 · 동적 라이브러리는 모두 Mach-O다. Header가 종류를, Load Commands가 진입점·의존 목록·서명 위치를 담는다.
+>
+> 컴파일러는 **타겟 트리플** 하나를 위해 기계어를 만든다 → 시뮬레이터용과 실기기용은 다른 산출물이고, 미리 컴파일된 라이브러리는 `.xcframework`에 둘 다 담아 배포한다.
+
+## 셀프 체크
+
+**Q1. .app 안에는 뭐가 들어있나**
+
+- 실행파일, Info.plist, Assets.car(컴파일된 에셋), Frameworks/(동적 프레임워크), embedded.mobileprovision(프로비저닝 프로필), `_CodeSignature/`(서명)
+
+**Q2. 시뮬레이터 빌드와 실기기 빌드는 왜 다른 산출물인가**
+
+- CPU가 아니라 **플랫폼**이 다르기 때문이다. Apple Silicon Mac에서는 둘 다 arm64지만, 타겟 트리플의 `-simulator`와 SDK(`iphonesimulator` / `iphoneos`)가 달라서 링크되는 시스템 프레임워크도 다르다
 
 ## 참고 자료
 
