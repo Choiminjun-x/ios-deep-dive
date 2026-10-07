@@ -8,8 +8,8 @@
 
 **빌드**
 
-- [iOS 빌드 과정](01_build/01_build-process.md)
-- [iOS 코드 서명](01_build/02_code-signing.md)
+- [iOS 빌드 과정](01_build/02_build-process.md)
+- [iOS 코드 서명](01_build/03_code-signing.md)
 
 **앱 생명주기**
 
