@@ -85,7 +85,7 @@ B. 도장 "X7Q9" → 공개키로 확인 → 원래 지문    → 42
 ### ② 인증서 안에 든 것
 
 ```
-인증서 (Apple Development: 최민주)
+인증서 (Apple Development: 홍길동)
  ├─ 공개키          ← 1단계의 확인용 열쇠
  ├─ 누구 것인지      이름, Team ID (AB12CD34EF)
  └─ Apple의 도장    ← "위 공개키는 이 사람 것이 맞다"
@@ -101,9 +101,9 @@ Apple의 공개키는 **모든 iPhone에 처음부터 내장**되어 있음
 
 ```
 0. Apple 공개키(기기 내장) → 인증서의 Apple 도장 확인
-   → "이 공개키는 최민주 것이 맞다" ✅
+   → "이 공개키는 홍길동 것이 맞다" ✅
 B. 인증서 안의 내 공개키   → 앱의 도장 확인
-   → "최민주가 찍었고, 바뀌지 않았다" ✅
+   → "홍길동이 찍었고, 바뀌지 않았다" ✅
 ```
 
 | 열쇠 | 확인하는 대상 |
@@ -142,8 +142,8 @@ B. 인증서 안의 내 공개키   → 앱의 도장 확인
 키체인 접근 → 로그인 → **내 인증서**에서 확인
 
 ```
-▼ Apple Development: 최민주 (AB12CD34EF)   ← 인증서 = 공개키 (앱 안에 들어감)
-    🔑 최민주                               ← 짝인 비밀키 (Mac에만 있음)
+▼ Apple Development: 홍길동 (AB12CD34EF)   ← 인증서 = 공개키 (앱 안에 들어감)
+    🔑 홍길동                               ← 짝인 비밀키 (Mac에만 있음)
 ```
 
 - 비밀키가 아래에 붙어 있어야 서명 가능
@@ -175,8 +175,8 @@ B. 인증서 안의 내 공개키   → 앱의 도장 확인
 
 ```
 프로비저닝 프로필 (Apple이 도장 찍음)
- ├─ 어떤 앱?        App ID: AB12CD34EF.com.mj.myapp
- ├─ 누가 서명?      허용된 인증서: Apple Development: 최민주
+ ├─ 어떤 앱?        App ID: AB12CD34EF.com.example.myapp
+ ├─ 누가 서명?      허용된 인증서: Apple Development: 홍길동
  ├─ 어느 기기?      허용된 기기 UDID 목록
  ├─ 무슨 권한?      푸시, App Group, iCloud …
  └─ 언제까지?       만료일
@@ -236,7 +236,7 @@ B. 인증서 안의 내 공개키   → 앱의 도장 확인
 
 ```
 CodeSign /…/MyApp.app
-    codesign --sign "Apple Development: 최민주 (AB12CD34EF)"
+    codesign --sign "Apple Development: 홍길동 (AB12CD34EF)"
              --entitlements MyApp.app.xcent
              MyApp.app
 ```
