@@ -6,7 +6,7 @@
 
 ## 전체 흐름 한눈에 보기
 
-![iOS 빌드 전체 흐름](images/01-build-overview.png)
+![iOS 빌드 전체 흐름](images/build-process-overview.png)
 
 ---
 
@@ -67,7 +67,7 @@ print("RELEASE에서 할 코드")
 - 어셈블러(컴파일) 단계 → **Relocatable Object File** 타입의 Mach-O 생성 (`.o`)
 - 링커 단계 → `Build Settings > Mach-O Type`에 따라 결과물 생성
 
-![Mach-O Type별 결과물](images/03-macho-type.png)
+![Mach-O Type별 결과물](images/build-process-macho-type.png)
 
 | Mach-O Type | 만드는 도구 | 결과 |
 |---|---|---|
@@ -79,7 +79,7 @@ print("RELEASE에서 할 코드")
 
 ## Xcode 빌드 버튼 클릭 후 전체 흐름
 
-![Xcode 빌드 도구 흐름](images/02-xcode-build-tools.png)
+![Xcode 빌드 도구 흐름](images/build-process-xcode-tools.png)
 
 1. **Xcode - 프로젝트 해석 & 스킴(Scheme) 분석**
    - 프로젝트 파일(`.xcodeproj`)과 설정된 스킴을 확인한다.

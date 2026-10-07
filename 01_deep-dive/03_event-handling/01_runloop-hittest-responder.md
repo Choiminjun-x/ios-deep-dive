@@ -89,7 +89,7 @@ override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 
 Hit-Testing이 위에서 아래로 내려가며 주인을 찾는다면, Responder Chain은 주인이 처리 못 한 이벤트를 아래에서 위로 올려 보내는 경로이다.
 
-![Hit-Testing과 Responder Chain의 방향](images/HitTest와_ResponderChain_방향.png)
+![Hit-Testing과 Responder Chain의 방향](images/runloop-hittest-responder-direction.png)
 
 ```swift
 extension UIResponder {

@@ -76,7 +76,7 @@ iPadOS 13에서 "한 앱의 창을 여러 개 띄우기" 도입 → 기존 모�
 
 ## 4. 멀티씬(창 2개)일 때 객체 구조
 
-![멀티씬 객체 구조](images/멀티씬_객체_구조.png)
+![멀티씬 객체 구조](images/app-scene-delegate-multi-scene.png)
 
 UISceneSession - 창 하나에 대한 영속 정보, 앱이 꺼져도 시스템이 보관\
 ㄴ 메모리가 부족하면 시스템은 백그라운드 창의 Scene을 해제하지만 Session은 남겨둔다. 사용자가 그 창을 다시 열면 Session 기반으로 Scene을 새로 만들어 복원한다.
