@@ -8,6 +8,7 @@
 
 **빌드**
 
+- [Xcode 프로젝트 구조와 빌드 설정](01_build/01_xcode-project-settings.md)
 - [iOS 빌드 과정](01_build/02_build-process.md)
 - [iOS 코드 서명](01_build/03_code-signing.md)
 
