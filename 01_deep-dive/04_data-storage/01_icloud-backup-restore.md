@@ -39,9 +39,11 @@
 ## 3. `isExcludedFromBackup` — 백업 제외 처리
 
 **대상**
+
 재다운로드/재생성 가능한 대용량 데이터(오프라인 지도, 다운로드 영상, 모델 파일), 또는 백업에 남으면 안 되는 민감 데이터.
 
 **동작**
+
 파일/디렉토리에 붙는 **확장 속성(extended attribute)**. 따라서 **실제 파일이 존재하는 시점에 적용**되어야 하고, 앱을 한 번 실행해 플래그를 찍은 뒤 **다음 백업이 돌아야** 반영된다.
 
 ```swift
@@ -89,6 +91,7 @@ assert(verifyExcluded(secureDir), "백업 제외가 적용되지 않았습니다
 ```
 
 **육안 확인**
+
 `설정 > Apple ID > iCloud > 저장 공간 관리 > 백업 > [기기]`에서 앱별 백업 용량 변화 확인.
 
 ## 4. Keychain 백업/복원
@@ -135,6 +138,7 @@ SecItemAdd(query as CFDictionary, nil)
 | 최고 수준 보호가 필요한 값 | `...WhenPasscodeSetThisDeviceOnly` |
 
 > ⚠️ **Team ID 주의**
+>
 > Keychain access group은 `TeamID.bundleID` 형태다.
 > bundle ID가 같아도 **서명 팀이 다르면 기존 Keychain 항목을 읽지 못한다.**
 
@@ -192,6 +196,7 @@ iOS가 바이너리를 자동으로 채우려면 "이 bundle ID를 어디서 받
 | bundle ID 동일 + Team ID 다름 | ⚠️ 파일은 연결, **Keychain은 접근 불가** |
 
 > ⚠️ **`placeholder 삭제 = 앱 삭제 = 컨테이너 삭제`**
+>
 > 회색 아이콘을 길게 눌러 지우면 복원된 데이터도 함께 사라진다.
 
 ## 6. 백업에 포함되지 않는 것 (자주 오해하는 항목)
