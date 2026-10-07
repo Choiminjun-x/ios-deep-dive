@@ -1,10 +1,6 @@
-# iCloud 백업/복원 정리
+# iCloud 백업/복원
 
-> iOS 개발자 관점에서 정리한 iCloud 생태계와 백업/복원 메커니즘
->
 > 작성일: 2026-09-23
-
----
 
 ## 1. iCloud의 두 축 — 동기화 vs 백업
 
@@ -24,8 +20,6 @@
 > (예: iCloud 사진이 켜져 있으면 사진은 백업 대상에서 빠짐)
 > 앱 데이터도 iCloud Drive/CloudKit에 있으면 백업이 아니라 그쪽에 저장된다.
 
----
-
 ## 2. 백업 대상 — 디렉토리별 정리
 
 | 경로 | 백업 | 용도 |
@@ -41,8 +35,6 @@
 > ⚠️ `Caches/`는 **저장 공간 부족 시 시스템이 삭제**할 수 있다.
 > "백업은 필요 없지만 지워지면 안 되는" 데이터는 `Caches`가 아니라
 > **`Application Support` + `isExcludedFromBackup`** 조합이 정답.
-
----
 
 ## 3. `isExcludedFromBackup` — 백업 제외 처리
 
@@ -99,8 +91,6 @@ assert(verifyExcluded(secureDir), "백업 제외가 적용되지 않았습니다
 **육안 확인**
 `설정 > Apple ID > iCloud > 저장 공간 관리 > 백업 > [기기]`에서 앱별 백업 용량 변화 확인.
 
----
-
 ## 4. Keychain 백업/복원
 
 Keychain은 파일 데이터와 **규칙이 다르다.** 두 개의 축으로 나눠서 봐야 한다.
@@ -147,8 +137,6 @@ SecItemAdd(query as CFDictionary, nil)
 > ⚠️ **Team ID 주의**
 > Keychain access group은 `TeamID.bundleID` 형태다.
 > bundle ID가 같아도 **서명 팀이 다르면 기존 Keychain 항목을 읽지 못한다.**
-
----
 
 ## 5. 백업/복원 메커니즘 — 바이너리는 백업되지 않는다
 
@@ -206,8 +194,6 @@ iOS가 바이너리를 자동으로 채우려면 "이 bundle ID를 어디서 받
 > ⚠️ **`placeholder 삭제 = 앱 삭제 = 컨테이너 삭제`**
 > 회색 아이콘을 길게 눌러 지우면 복원된 데이터도 함께 사라진다.
 
----
-
 ## 6. 백업에 포함되지 않는 것 (자주 오해하는 항목)
 
 | 항목 | 복원 후 |
@@ -218,9 +204,7 @@ iOS가 바이너리를 자동으로 채우려면 "이 bundle ID를 어디서 받
 | Apple Pay 카드 정보 | 재등록 필요 |
 | Face ID / Touch ID 설정 | 재설정 필요 |
 
----
-
-## 7. 핵심 요약
+## 핵심 정리
 
 1. **동기화 ≠ 백업.** 목적도, 개발자 개입 방식도, 접근 경로도 다르다.
 2. **백업에 앱 바이너리는 없다.** 데이터만 있고, 재연결 키는 bundle ID.
@@ -228,9 +212,7 @@ iOS가 바이너리를 자동으로 채우려면 "이 bundle ID를 어디서 받
 4. **Keychain은 iCloud 백업으로 다른 기기에 넘어가지 않는다.** 기기 간 전달이 필요하면 `kSecAttrSynchronizable`(iCloud 키체인) 또는 암호화된 로컬 백업.
 5. **백업 제외는 디렉토리 단위로**, 앱 실행 시 적용 → 다음 백업부터 반영.
 
----
-
-## 📚 참고 자료
+## 참고 자료
 
 - Apple Support — *What does iCloud back up?*
 - Apple Support — *Backup methods for iPhone or iPad*

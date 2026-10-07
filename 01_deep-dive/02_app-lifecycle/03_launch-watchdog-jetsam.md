@@ -2,7 +2,7 @@
 
 > 작성일: 2026-09-29
 
-## A. Launch의 종류: "앱 시작"은 한 가지가 아니다
+## 1. Launch의 종류: "앱 시작"은 한 가지가 아니다
 
 ### Launch 종류
 
@@ -16,7 +16,7 @@
   → 앱이 화면에 나타날 때마다 실행해야 하는 코드는 `sceneWillEnterForeground`에 둔다
 - 런치 속도는 Cold 기준으로 재야 한다. 개발 중엔 대부분 Warm이라 실제 사용자보다 빠르게 느껴진다
 
-## B. main() 이전: Pre-main 단계
+## 2. main() 이전: Pre-main 단계
 
 ```
 탭 → 커널이 프로세스 생성
@@ -28,7 +28,7 @@
    → main() → UIApplicationMain() ...        ← 지난 문서의 시작점
 ```
 
-## C. Prewarming (iOS 15+): 탭하기 전에 이미 시작된 앱
+## 3. Prewarming (iOS 15+): 탭하기 전에 이미 시작된 앱
 
 - iOS 15부터 시스템은 사용 패턴을 보고 사용자가 탭하기 전에 앱 프로세스를 미리 띄워둘 수 있다
 - Prewarming은 `main()`이 `UIApplicationMain`을 호출하기 직전까지만 실행, 위 B의 Pre-main 단계가 미리 돌고, `didFinishLaunching`은 실제로 사용자 탭 시 호출됨
@@ -39,7 +39,7 @@ Prewarm으로 시작된 프로세스는 환경 변수 `ActivePrewarm`이 `"1"`�
 let isPrewarmed = ProcessInfo.processInfo.environment["ActivePrewarm"] == "1"
 ```
 
-## D. Watchdog: 메인 스레드를 너무 오래 막으면 강제 종료
+## 4. Watchdog: 메인 스레드를 너무 오래 막으면 강제 종료
 
 - 감시 시점: 런치, 포그라운드/백그라운드 전환, 종료 같은 라이프사이클 전환 구간
 - 크래시 리포트의 예외 코드: `0x8badf00d`
@@ -66,7 +66,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions ...
 - `0x8badf00d`를 보면 크래시 리포트의 **메인 스레드(Thread 0) 스택**부터 확인한다. 그 순간 메인 스레드가 하고 있던 작업(동기 네트워크, 파일 I/O, 락 대기 등)이 원인이다
 - **디버거가 연결되어 있으면 Watchdog이 동작하지 않는다** → 개발 중엔 재현되지 않고 사용자 기기에서만 발생한다
 
-## E. Suspended와 Jetsam: 예고 없는 종료
+## 5. Suspended와 Jetsam: 예고 없는 종료
 
 > Jetsam = 커널의 메모리 압박 종료 메커니즘 (Linux의 OOM Killer와 같은 역할)
 
@@ -84,6 +84,6 @@ Active → Background (수 초간 코드 실행 가능)
 - **포그라운드 앱도** 기기별 메모리 한도를 넘으면 Jetsam에 종료된다. 이때는 일반 크래시 리포트가 아니라 **JetsamEvent 리포트**가 남는다 (설정 > 개인정보 보호 및 보안 > 분석 및 향상 > 분석 데이터)
 - 백그라운드에서 메모리를 적게 쓸수록 Jetsam 우선순위가 뒤로 밀려 오래 살아남는다 → `sceneDidEnterBackground`에서 이미지 캐시 등을 비우는 것이 권장된다
 
-## F. 백그라운드 실행: 시간을 더 얻는 방법
+## 6. 백그라운드 실행: 시간을 더 얻는 방법
 
 Background에 들어가면 기본적으로 수 초 안에 Suspended가 된다. 그 이상 필요 시 명시적으로 요청해야 한다.

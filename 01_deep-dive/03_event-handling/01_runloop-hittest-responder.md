@@ -2,7 +2,7 @@
 
 > 작성일: 2026-09-29
 
-## A. RunLoop: 앱이 "살아 있는" 방식
+## 1. RunLoop: 앱이 "살아 있는" 방식
 
 ```swift
 // 개념 설명용 의사코드 (실제 구현은 CFRunLoop, C 레벨)
@@ -41,7 +41,7 @@ RunLoop.main.add(timer, forMode: .common)
 
 Apple이 스크롤 중엔 다른 걸 잠시 미루는 설계를 한 이유는 스크롤의 부드러움을 최우선으로 두기 위해서이다.
 
-## B. Hit-Testing: "누가 이 터치를 받을까?"
+## 2. Hit-Testing: "누가 이 터치를 받을까?"
 
 ### 터치가 전달되는 경로
 
@@ -85,7 +85,7 @@ override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 | `UIImageView` 위 버튼이 안 눌림 | **1번** — `UIImageView`, `UILabel`은 `isUserInteractionEnabled` 기본값이 `false` |
 | 위에 덮인 뷰가 터치를 가로챔 | **3번** — 앞에 있는 형제 뷰가 먼저 검사됨 |
 
-## C. Responder Chain: "처리 못 하면 누구에게 넘길까?"
+## 3. Responder Chain: "처리 못 하면 누구에게 넘길까?"
 
 Hit-Testing이 위에서 아래로 내려가며 주인을 찾는다면, Responder Chain은 주인이 처리 못 한 이벤트를 아래에서 위로 올려 보내는 경로이다.
 
@@ -157,14 +157,13 @@ saveButton.addTarget(nil, action: #selector(DocumentActions.saveDocument(_:)), f
 
 **Q1. 스크롤 중에 Timer 기반 카운트다운이 멈췄다. 원인과 해결책은?**
 
-: `.default`와 `.tracking`을 모두 포함하는 `.common` 모드에 등록한다.
+- `.default`와 `.tracking`을 모두 포함하는 `.common` 모드에 등록한다.
 
 **Q2. 부모 뷰 밖으로 튀어나온 버튼 영역이 안 눌린다. hit-test 알고리즘의 어느 단계 때문인가?**
 
-: 2단계 `point(inside:)` 검사에서 부모 뷰가 먼저 탈락하기 때문이다. hit-test는 위에서 아래로 내려간다. 부모가 "터치가 내 영역 밖"이라며 nil을 반환하면 3단계(자식 검사)로 내려가지 않으므로, 버튼은 검사될 기회조차 없다.
+- 2단계 `point(inside:)` 검사에서 부모 뷰가 먼저 탈락하기 때문이다. hit-test는 위에서 아래로 내려간다. 부모가 "터치가 내 영역 밖"이라며 nil을 반환하면 3단계(자식 검사)로 내려가지 않으므로, 버튼은 검사될 기회조차 없다.
 
 **Q3. AppDelegate가 UIResponder를 상속하는 이유는?**
 
-: Responder Chain의 마지막 정거장이 되기 위해서다. 체인을 끝까지 올라가도 아무도 처리하지 않은 이벤트나 액션을 AppDelegate가 처리할 수 있다.
-
-보충: `NSObject`만 상속해도 앱은 정상 동작한다. Responder Chain에서 빠질 뿐이므로, 필수가 아니라 "마지막 처리 기회를 갖기 위한 선택"이다.
+- Responder Chain의 마지막 정거장이 되기 위해서다. 체인을 끝까지 올라가도 아무도 처리하지 않은 이벤트나 액션을 AppDelegate가 처리할 수 있다.
+- 보충: `NSObject`만 상속해도 앱은 정상 동작한다. Responder Chain에서 빠질 뿐이므로, 필수가 아니라 "마지막 처리 기회를 갖기 위한 선택"이다.
