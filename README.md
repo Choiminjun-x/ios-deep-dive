@@ -25,6 +25,10 @@
 
 - [iCloud 백업/복원](04_data-storage/01_icloud-backup-restore.md)
 
+**보안**
+
+- [iOS Secure Enclave](05_security/01_secure-enclave.md)
+
 ## 작성 규칙
 
 노트 골격은 [_template.md](_template.md).
