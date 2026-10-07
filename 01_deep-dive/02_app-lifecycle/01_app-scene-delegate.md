@@ -6,7 +6,8 @@
 
 ## 1. 밑바닥: 앱 아이콘을 탭하면 무슨 일이 일어나나
 
-프로세스가 시작되면 main() 함수 호출\
+프로세스가 시작되면 main() 함수 호출
+
 @main이 대신 만들어주기 때문에 main.swift를 사용하지 않음
 
 ```swift
@@ -26,7 +27,8 @@ UIApplicationMain이 하는 일:
 3. Info.plist 읽기 (스토리보드, 씬 매니페스트 등)
 4. 메인 런루프(Run Loop) 시작 - 터치, 타이머, 시스템 이벤트를 무한히 기다리고 처리하는 루프, 이 함수는 절대 리턴하지 않는다
 
-핵심은 델리게이트 패턴\
+핵심은 델리게이트 패턴
+
 UIApplication은 Apple이 만든 클래스로서 수정할 수 없다 → "중요한 일이 생기면 알려줄게(delegate)" → 그 창구가 UIApplicationDelegate, 즉 AppDelegate
 
 ## 2. AppDelegate 시대 (iOS 12까지): 앱 = 창 하나
@@ -78,8 +80,8 @@ iPadOS 13에서 "한 앱의 창을 여러 개 띄우기" 도입 → 기존 모�
 
 ![멀티씬 객체 구조](images/app-scene-delegate-multi-scene.png)
 
-UISceneSession - 창 하나에 대한 영속 정보, 앱이 꺼져도 시스템이 보관\
-ㄴ 메모리가 부족하면 시스템은 백그라운드 창의 Scene을 해제하지만 Session은 남겨둔다. 사용자가 그 창을 다시 열면 Session 기반으로 Scene을 새로 만들어 복원한다.
+- UISceneSession - 창 하나에 대한 영속 정보, 앱이 꺼져도 시스템이 보관
+  - 메모리가 부족하면 시스템은 백그라운드 창의 Scene을 해제하지만 Session은 남겨둔다. 사용자가 그 창을 다시 열면 Session 기반으로 Scene을 새로 만들어 복원한다.
 
 ## 5. 씬 라이프사이클
 

@@ -155,12 +155,16 @@ saveButton.addTarget(nil, action: #selector(DocumentActions.saveDocument(_:)), f
 
 ## 셀프 체크
 
-**Q1. 스크롤 중에 Timer 기반 카운트다운이 멈췄다. 원인과 해결책은?**\
+**Q1. 스크롤 중에 Timer 기반 카운트다운이 멈췄다. 원인과 해결책은?**
+
 : `.default`와 `.tracking`을 모두 포함하는 `.common` 모드에 등록한다.
 
-**Q2. 부모 뷰 밖으로 튀어나온 버튼 영역이 안 눌린다. hit-test 알고리즘의 어느 단계 때문인가?**\
+**Q2. 부모 뷰 밖으로 튀어나온 버튼 영역이 안 눌린다. hit-test 알고리즘의 어느 단계 때문인가?**
+
 : 2단계 `point(inside:)` 검사에서 부모 뷰가 먼저 탈락하기 때문이다. hit-test는 위에서 아래로 내려간다. 부모가 "터치가 내 영역 밖"이라며 nil을 반환하면 3단계(자식 검사)로 내려가지 않으므로, 버튼은 검사될 기회조차 없다.
 
-**Q3. AppDelegate가 UIResponder를 상속하는 이유는?**\
-: Responder Chain의 마지막 정거장이 되기 위해서다. 체인을 끝까지 올라가도 아무도 처리하지 않은 이벤트나 액션을 AppDelegate가 처리할 수 있다.\
+**Q3. AppDelegate가 UIResponder를 상속하는 이유는?**
+
+: Responder Chain의 마지막 정거장이 되기 위해서다. 체인을 끝까지 올라가도 아무도 처리하지 않은 이벤트나 액션을 AppDelegate가 처리할 수 있다.
+
 보충: `NSObject`만 상속해도 앱은 정상 동작한다. Responder Chain에서 빠질 뿐이므로, 필수가 아니라 "마지막 처리 기회를 갖기 위한 선택"이다.

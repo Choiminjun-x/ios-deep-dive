@@ -23,7 +23,7 @@
 |---|---|---|
 | 전처리 단계 | 있음 (`#include`, `#define`, `#if`) | 없음 |
 | 조건 컴파일 | 전처리기가 처리 | 컴파일러가 파싱 중에 처리 |
-| Xcode 설정 | Preprocessor Macros<br/>(`GCC_PREPROCESSOR_DEFINITIONS`) | Active Compilation Conditions<br/>(`SWIFT_ACTIVE_COMPILATION_CONDITIONS`) |
+| Xcode 설정 | Preprocessor Macros (`GCC_PREPROCESSOR_DEFINITIONS`) | Active Compilation Conditions (`SWIFT_ACTIVE_COMPILATION_CONDITIONS`) |
 
 ### 전처리문 (조건 컴파일)
 

@@ -116,7 +116,7 @@ Keychain은 파일 데이터와 **규칙이 다르다.** 두 개의 축으로 �
 
 ### 축 2 — Accessibility 속성
 
-| 속성 | iCloud 백업<br>→ 같은 기기 | iCloud 백업<br>→ 다른 기기 | 암호화 Finder 백업<br>→ 다른 기기 | iCloud 키체인<br>동기화 |
+| 속성 | iCloud 백업 → 같은 기기 | iCloud 백업 → 다른 기기 | 암호화 Finder 백업 → 다른 기기 | iCloud 키체인 동기화 |
 |---|:---:|:---:|:---:|:---:|
 | `...AfterFirstUnlock` | ✅ | ❌ | ✅ | ✅ (synchronizable 시) |
 | `...AfterFirstUnlockThisDeviceOnly` | ✅ | ❌ | ❌ | ❌ |
@@ -156,7 +156,7 @@ SecItemAdd(query as CFDictionary, nil)
 
 > **백업에 담기는 것은 앱의 샌드박스 컨테이너(데이터)일 뿐, `.app` 번들(실행 바이너리)이 아니다.**
 
-Apple 공식 문서 표현으로는 **"기기에 설치한 앱들의 앱 데이터"**가 백업 대상이다.
+Apple 공식 문서 표현으로는 "**기기에 설치한 앱들의 앱 데이터**"가 백업 대상이다.
 앱 바이너리는 **Apple ID의 구매 이력(메타데이터)** 형태로만 기록된다.
 백업 크기가 기기 사용량보다 항상 작은 이유.
 
