@@ -12,6 +12,7 @@
 - [iOS 빌드 과정](01_build/02_build-process.md)
 - [iOS 코드 서명](01_build/03_code-signing.md)
 - [심볼과 링킹](01_build/04_symbol-linking.md)
+- [SPM과 의존성 빌드](01_build/05_spm-dependency-build.md)
 
 **앱 생명주기**
 
