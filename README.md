@@ -13,6 +13,7 @@
 - [iOS 코드 서명](01_build/03_code-signing.md)
 - [심볼과 링킹](01_build/04_symbol-linking.md)
 - [SPM과 의존성 빌드](01_build/05_spm-dependency-build.md)
+- [Swift 컴파일러 내부와 모듈](01_build/06_swift-compiler-module.md)
 
 **앱 생명주기**
 
