@@ -29,3 +29,4 @@
 ## 보안 `05_security`
 
 - [iOS Secure Enclave](05_security/01_secure-enclave.md)
+- [App Attest 기술 검토](05_security/02_app-attest.md)
