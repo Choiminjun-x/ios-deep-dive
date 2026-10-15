@@ -489,37 +489,9 @@ challenge를 assertion에 공급하는 방식은 세 가지다.
 
 ## 셀프 체크
 
-Q. generateKey()가 반환한 공개키로 서버에 challenge를 요청하나?
-
-A. 아니다. generateKey()는 keyId만 반환하고, challenge 요청에는 키가 필요 없다.
-
-Q. challenge는 Apple 서버에 요청하나?
-
-A. 아니다. 우리 서버가 발급한다. Apple이 개입하는 건 attestKey() 한 번뿐이다.
-
-Q. challenge 때문에 신규 API를 만들어야 하나?
-
-A. 직접 구현하면 challenge 발급, attestation 등록 API 2개가 신규. 보호 API는 기존 API에 검증만 추가.
-
 Q. 앱이 공개키를 모르는데 서버는 어떻게 저장하나?
 
 A. attestation 객체 안 인증서에 공개키가 있고, 서버가 파싱해서 꺼낸다.
-
-Q. 개인키는 어디에 쓰이나?
-
-A. assertion 서명. 공개키는 그 서명을 검증.
-
-Q. keyId로 공개키·개인키 둘 다 찾나?
-
-A. 기기에서는 개인키를, 서버에서는 공개키를 찾는 이름표. 키 자체가 들어 있지는 않다.
-
-Q. 등록 확인 → 서명 확인 둘 다 하나?
-
-A. 그렇다. 다만 등록 확인은 로컬·DB 조회 한 번이라 가볍다.
-
-Q. 미등록·불가면 API 호출이 안 되나?
-
-A. App Attest가 막는 게 아니라 서버 정책이 결정한다 (차단 / 로그만 / 추가 검증).
 
 Q. 서버는 Apple 보증 증명서를 어떻게 검증하나?
 
@@ -529,17 +501,13 @@ Q. 요청 형태가 해시 + assertion + keyId인가?
 
 A. 해시는 보내지 않는다. 바디 원문 + assertion + keyId.
 
-Q. assertion의 "서명"은 해시를 서명한 것인가?
+Q. 서버는 assertion의 서명을 다시 만들어 비교하나?
 
-A. 서명 대상(authenticatorData + 바디 해시)을 개인키로 계산한 숫자 두 개.
+A. 아니다. 서버는 개인키가 없어 서명을 만들 수 없다. 바디 원문으로 서명 대상(authenticatorData + 바디 해시)을 다시 만들고, 공개키로 서명이 맞는지 참/거짓을 판정한다.
 
-Q. 서버가 서명을 다시 만들어 비교하나?
+Q. 미등록·불가면 API 호출이 안 되나?
 
-A. 서명 대상을 다시 만들고, 공개키로 참/거짓을 판정한다.
-
-Q. 클라이언트 개발자가 attestation 내부 구조를 알아야 하나?
-
-A. 몰라도 된다. 그대로 전달만 한다.
+A. App Attest가 막는 게 아니라 서버 정책이 결정한다 (차단 / 로그만 / 추가 검증).
 
 Q. attestKey()가 `unknownSystemFailure`를 반환하면 같은 키로 재시도하나?
 
