@@ -17,6 +17,7 @@
 - [AppDelegate와 SceneDelegate](02_app-lifecycle/01_app-scene-delegate.md)
 - [iOS 27 UIScene 라이프사이클 필수화](02_app-lifecycle/02_uiscene-ios27.md)
 - [Launch, Prewarming, Watchdog, Jetsam](02_app-lifecycle/03_launch-watchdog-jetsam.md)
+- [런치: 탭부터 첫 프레임까지](02_app-lifecycle/04_launch-tap-to-first-frame.md)
 
 ## 이벤트 처리 `03_event-handling`
 
