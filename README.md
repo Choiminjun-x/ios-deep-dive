@@ -19,6 +19,7 @@
 - [Launch, Prewarming, Watchdog, Jetsam](02_app-lifecycle/03_launch-watchdog-jetsam.md)
 - [런치: 탭부터 첫 프레임까지](02_app-lifecycle/04_launch-tap-to-first-frame.md)
 - [백그라운드 실행 · 종료 · 복원](02_app-lifecycle/05_background-termination-restoration.md)
+- [렌더 루프와 첫 프레임](02_app-lifecycle/06_render-loop-first-frame.md)
 
 ## 이벤트 처리 `03_event-handling`
 
