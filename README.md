@@ -25,6 +25,7 @@
 
 - [RunLoop, Hit-Testing, Responder Chain](03_event-handling/01_runloop-hittest-responder.md)
 - [런루프 (Run Loop)](03_event-handling/02_run-loop.md)
+- [UIGestureRecognizer](03_event-handling/03_gesture-recognizer.md)
 
 ## 데이터 저장 `04_data-storage`
 
