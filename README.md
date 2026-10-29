@@ -27,6 +27,7 @@
 - [런루프 (Run Loop)](03_event-handling/02_run-loop.md)
 - [UIGestureRecognizer](03_event-handling/03_gesture-recognizer.md)
 - [제스처 충돌](03_event-handling/04_gesture-conflict.md)
+- [Target-Action](03_event-handling/05_target-action.md)
 
 ## 데이터 저장 `04_data-storage`
 
