@@ -41,6 +41,7 @@
 ## 동시성 `06_concurrency`
 
 - [Swift Concurrency 선수 개념](06_concurrency/01_concurrency-prerequisites.md)
+- [Swift Concurrency 기본](06_concurrency/02_swift-concurrency-basics.md)
 
 ## 레이아웃 `07_layout`
 
