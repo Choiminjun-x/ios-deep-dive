@@ -44,6 +44,7 @@
 - [Swift Concurrency 기본](06_concurrency/02_swift-concurrency-basics.md)
 - [Sendable](06_concurrency/03_sendable.md)
 - [Actor](06_concurrency/04_actor.md)
+- [Continuation](06_concurrency/05_continuation.md)
 
 ## 레이아웃 `07_layout`
 
