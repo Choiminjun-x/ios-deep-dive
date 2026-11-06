@@ -46,6 +46,8 @@
 - [Actor](06_concurrency/04_actor.md)
 - [Continuation](06_concurrency/05_continuation.md)
 - [AsyncSequence](06_concurrency/06_async-sequence.md)
+- [Swift Concurrency 실전 1 — 중복 네트워크 요청 (Latest Wins)](06_concurrency/07_swift-concurrency-practice-01.md)
+- [Swift Concurrency 실전 2 — 검색어 자동 완성 (Debounce)](06_concurrency/08_swift-concurrency-practice-02.md)
 
 ## 레이아웃 `07_layout`
 
