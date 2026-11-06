@@ -45,6 +45,7 @@
 - [Sendable](06_concurrency/03_sendable.md)
 - [Actor](06_concurrency/04_actor.md)
 - [Continuation](06_concurrency/05_continuation.md)
+- [AsyncSequence](06_concurrency/06_async-sequence.md)
 
 ## 레이아웃 `07_layout`
 
