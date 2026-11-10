@@ -49,6 +49,9 @@
 - [Swift Concurrency 실전 1 — 중복 네트워크 요청 (Latest Wins)](06_concurrency/07_swift-concurrency-practice-01.md)
 - [Swift Concurrency 실전 2 — 검색어 자동 완성 (Debounce)](06_concurrency/08_swift-concurrency-practice-02.md)
 - [Swift Concurrency 실전 3 — 화면 이탈과 비동기 작업](06_concurrency/09_swift-concurrency-practice-03.md)
+- [Swift Concurrency 실전 4 — TaskGroup과 동시 실행 개수 제한](06_concurrency/10_swift-concurrency-practice-04.md)
+- [Swift Concurrency 실전 5 — 공유 데이터 관리와 Actor](06_concurrency/11_swift-concurrency-practice-05.md)
+- [Swift Concurrency 실전 6 — 캐시와 중복 요청](06_concurrency/12_swift-concurrency-practice-06.md)
 
 ## 레이아웃 `07_layout`
 
